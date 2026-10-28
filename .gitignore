@@ -1,0 +1,90 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+**/atlas-credentials.env
+**/*credentials*
+**/*secret*
+
+# Python environments and caches
+.venv/
+venv/
+env/
+torch-env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Node and frontend build output
+node_modules/
+frontend/node_modules/
+frontend/dist/
+dist/
+dist-ssr/
+*.tsbuildinfo
+*.local
+
+# Datasets and generated training runs
+/data/
+/datasets/
+/DataSet/
+/runs/
+/training_outputs/
+**/train.cache
+**/val.cache
+
+# Model weights and checkpoints
+*.pt
+*.pth
+*.onnx
+*.engine
+*.safetensors
+*.ckpt
+
+# Uploaded media, evidence and generated files
+/storage/
+/uploads/
+/evidence/
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.webm
+
+# Archives, backups, and local exports
+/backups/
+*.zip
+*.tar
+*.tar.gz
+*.7z
+
+# Logs and temporary files
+logs/
+*.log
+*.tmp
+*.bak
+*.backup
+*.swp
+
+# Local editor and OS files
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+.gitignore.before-github
+
+# Historical source backups
+*.pre_*_backup
+*.pre_*_backup.*
+*_backup
+*_backup.*
+
+# Timestamped and alternate backup copies
+*.bak*
+*backup*
+*.pre_* 

@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-slate-950 text-slate-100 font-sans;
+  }
+
+  input, textarea, select {
+    @apply bg-slate-800 border border-slate-700 rounded text-slate-100 placeholder-slate-500;
+  }
+
+  button {
+    @apply transition-all duration-200;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded font-medium;
+  }
+
+  .btn-secondary {
+    @apply px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded font-medium;
+  }
+
+  .card {
+    @apply bg-slate-800 border border-slate-700 rounded-lg p-4;
+  }
+
+  .status-badge {
+    @apply px-2 py-1 text-xs font-semibold rounded-full;
+  }
+
+  .status-online {
+    @apply bg-green-500/20 text-green-400;
+  }
+
+  .status-offline {
+    @apply bg-red-500/20 text-red-400;
+  }
+
+  .status-warning {
+    @apply bg-amber-500/20 text-amber-400;
+  }
+
+  .status-pending {
+    @apply bg-blue-500/20 text-blue-400;
+  }
+
+  .glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/20;
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "model_name": "TrafficAI Helmet Detector",
+  "architecture": "YOLO11n",
+  "checkpoint": "/home/itm/TrafficAI/runs/detect/runs/helmet/helmet_v6_binary_yolo11n/weights/best.pt",
+  "classes": {
+    "0": "with_helmet",
+    "1": "without_helmet"
+  },
+  "dataset": "helmet_detection_v6_binary",
+  "training_epochs": 25,
+  "validation_metrics": {
+    "precision": 0.788,
+    "recall": 0.789,
+    "mAP50": 0.807,
+    "mAP50_95": 0.455
+  },
+  "held_out_test_metrics": {
+    "precision": 0.759,
+    "recall": 0.727,
+    "mAP50": 0.773,
+    "mAP50_95": 0.413,
+    "without_helmet_recall": 0.682
+  },
+  "idd_video_test": {
+    "frames_processed": 251,
+    "detections_at_conf_0_25": 0,
+    "status": "Weak generalization on tested IDD video"
+  }
+}

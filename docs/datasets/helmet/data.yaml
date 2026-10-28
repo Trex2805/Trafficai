@@ -1,0 +1,8 @@
+path: c:/projects/traffic-analytics-system/data/datasets/helmet_combined
+train: train/images
+val: valid/images
+test: test/images
+nc: 2
+names:
+  - helmet
+  - no_helmet

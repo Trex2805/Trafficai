@@ -1,0 +1,24 @@
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+class Settings(BaseSettings):
+    app_name: str = "TrafficAI"
+    app_version: str = "0.1.0"
+    api_prefix: str = "/api/v1"
+
+    model_path: str = (
+        "runs/detect/runs/production/"
+        "idd_speed_benchmark_batch24/weights/best.pt"
+    )
+    evidence_dir: str = "storage/evidence"
+
+    qdrant_url: str = "http://localhost:6333"
+
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
+
+
+settings = Settings()
