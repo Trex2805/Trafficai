@@ -105,7 +105,7 @@ def main() -> int:
                 return frontend_exit_code or 1
             time.sleep(0.5)
     except KeyboardInterrupt:
-        print("\n[TrafficAI] All Services Off TrafficAI has been stoped ..")
+        print("\n[TrafficAI] All Services Off TrafficAI has been stoped ")
         return 0
     finally:
         if frontend is not None:

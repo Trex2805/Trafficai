@@ -31,15 +31,19 @@ image_embeddings = db["image_embeddings"]
 
 
 def test_connection():
-    try:
-        client.admin.command("ping")
-        print("MongoDB connection successful!")
-        print(f"Database: {DATABASE_NAME}")
-        print("Collections ready to use.")
+    check_database_connection()
+    print("MongoDB connection successful!")
+    print(f"Database: {DATABASE_NAME}")
+    print("Collections ready to use.")
 
+
+def check_database_connection():
+    try:
+        return client.admin.command("ping")
     except Exception as error:
         print("MongoDB connection failed.")
         print(f"Error: {error}")
+        raise
 
 
 if __name__ == "__main__":
