@@ -1,0 +1,15 @@
+[
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 57,
+    "first_timestamp": 1.6,
+    "last_timestamp": 1.6,
+    "observed_frames": 1,
+    "observed_classes": [
+      "person"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  }
+]

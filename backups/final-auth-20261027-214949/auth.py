@@ -1,0 +1,338 @@
+import os
+import re
+import hashlib
+import hmac
+import secrets
+from datetime import datetime, timedelta, timezone
+from typing import Literal
+
+import jwt
+from bson import ObjectId
+from fastapi import APIRouter, Depends, Header, HTTPException, status
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from pydantic import BaseModel, Field
+from pymongo.errors import DuplicateKeyError
+from pymongo import ReturnDocument
+from pwdlib import PasswordHash
+
+from backend.core.mongodb import db
+
+router = APIRouter(prefix="/auth", tags=["Authentication"])
+
+users = db["users"]
+password_hash = PasswordHash.recommended()
+bearer_scheme = HTTPBearer(auto_error=False)
+
+JWT_ALGORITHM = "HS256"
+JWT_ISSUER = "TrafficAI"
+TOKEN_MINUTES = 30
+ADMIN_KEY = os.getenv("TRAFFICAI_ADMIN_KEY", "")
+invitations = db["developer_invitations"]
+
+AUTH_SECRET = os.getenv("TRAFFICAI_AUTH_SECRET")
+if not AUTH_SECRET or len(AUTH_SECRET) < 32:
+    raise RuntimeError(
+        "TRAFFICAI_AUTH_SECRET is missing or too short. "
+        "Configure it in the project .env file."
+    )
+
+
+class RegisterRequest(BaseModel):
+    name: str = Field(min_length=2, max_length=80)
+    email: str = Field(min_length=5, max_length=254)
+    password: str = Field(min_length=12, max_length=128)
+    requested_role: Literal["user", "authority", "developer"] = "user"
+    invitation_token: str | None = Field(default=None, min_length=32, max_length=256)
+
+
+class LoginRequest(BaseModel):
+    email: str = Field(min_length=5, max_length=254)
+    password: str = Field(min_length=1, max_length=128)
+
+
+def normalize_email(email: str) -> str:
+    email = email.strip().lower()
+    if not re.fullmatch(r"[^@\s]+@[^@\s]+\.[^@\s]+", email):
+        raise HTTPException(status_code=422, detail="Enter a valid email address.")
+    return email
+
+
+def public_user(user: dict) -> dict:
+    return {
+        "id": str(user["_id"]),
+        "name": user["name"],
+        "email": user["email"],
+        "role": user["role"],
+        "requested_role": user.get("requested_role", user["role"]),
+        "status": user["status"],
+    }
+
+
+def create_access_token(user: dict) -> str:
+    now = datetime.now(timezone.utc)
+    payload = {
+        "sub": str(user["_id"]),
+        "email": user["email"],
+        "role": user["role"],
+        "iss": JWT_ISSUER,
+        "iat": now,
+        "exp": now + timedelta(minutes=TOKEN_MINUTES),
+    }
+    return jwt.encode(payload, AUTH_SECRET, algorithm=JWT_ALGORITHM)
+
+
+def get_current_user(
+    credentials: HTTPAuthorizationCredentials | None = Depends(bearer_scheme),
+) -> dict:
+    if credentials is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Authentication required.",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    try:
+        payload = jwt.decode(
+            credentials.credentials,
+            AUTH_SECRET,
+            algorithms=[JWT_ALGORITHM],
+            issuer=JWT_ISSUER,
+            options={"require": ["sub", "exp", "iat", "iss"]},
+        )
+        user_id = payload["sub"]
+        if not ObjectId.is_valid(user_id):
+            raise ValueError("Invalid user identifier")
+    except (jwt.InvalidTokenError, ValueError, KeyError):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid or expired access token.",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    user = users.find_one({"_id": ObjectId(user_id)})
+    if not user or user.get("status") != "active":
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Account is unavailable or not active.",
+        )
+
+    return user
+
+
+
+class DeveloperInvitationRequest(BaseModel):
+    expires_in_hours: int = Field(default=72, ge=1, le=168)
+
+
+class AuthorityApprovalRequest(BaseModel):
+    eligibility_verified: bool
+    verification_note: str = Field(min_length=10, max_length=1000)
+
+
+def require_admin_key(x_admin_key: str | None = Header(default=None)) -> None:
+    if not ADMIN_KEY or len(ADMIN_KEY) < 32:
+        raise HTTPException(status_code=503, detail="Administrator operations are not configured.")
+    if not x_admin_key or not hmac.compare_digest(x_admin_key, ADMIN_KEY):
+        raise HTTPException(status_code=403, detail="Administrator authorization required.")
+
+
+def token_digest(token: str) -> str:
+    return hashlib.sha256(token.encode("utf-8")).hexdigest()
+
+
+@router.post("/admin/developer-invitations", status_code=status.HTTP_201_CREATED)
+def create_developer_invitation(
+    request: DeveloperInvitationRequest,
+    _: None = Depends(require_admin_key),
+):
+    now = datetime.now(timezone.utc)
+    raw_token = secrets.token_urlsafe(48)
+    invitations.insert_one({
+        "token_hash": token_digest(raw_token),
+        "created_at": now,
+        "expires_at": now + timedelta(hours=request.expires_in_hours),
+        "consumed_at": None,
+    })
+    # Show the token once. Only its hash is persisted.
+    return {
+        "invitation_token": raw_token,
+        "expires_at": (now + timedelta(hours=request.expires_in_hours)).isoformat(),
+        "message": "Copy this invitation token now. It will not be shown again.",
+    }
+
+
+@router.get("/admin/authority-requests")
+def list_authority_requests(_: None = Depends(require_admin_key)):
+    cursor = users.find(
+        {"requested_role": "authority", "status": "pending"},
+        {"name": 1, "email": 1, "created_at": 1, "requested_role": 1, "status": 1},
+    ).sort("created_at", 1)
+    return {
+        "requests": [
+            {
+                "id": str(user["_id"]),
+                "name": user.get("name", ""),
+                "email": user.get("email", ""),
+                "created_at": user.get("created_at").isoformat()
+                if user.get("created_at") else None,
+            }
+            for user in cursor
+        ]
+    }
+
+
+@router.post("/admin/authority-requests/{user_id}/approve")
+def approve_authority_request(
+    user_id: str,
+    request: AuthorityApprovalRequest,
+    _: None = Depends(require_admin_key),
+):
+    if not ObjectId.is_valid(user_id):
+        raise HTTPException(status_code=422, detail="Invalid account identifier.")
+    if request.eligibility_verified is not True:
+        raise HTTPException(status_code=400, detail="Eligibility must be verified before approval.")
+
+    now = datetime.now(timezone.utc)
+    result = users.update_one(
+        {
+            "_id": ObjectId(user_id),
+            "requested_role": "authority",
+            "role": "user",
+            "status": "pending",
+        },
+        {
+            "$set": {
+                "role": "authority",
+                "status": "active",
+                "eligibility_verified": True,
+                "verification_note": request.verification_note.strip(),
+                "approved_at": now,
+            }
+        },
+    )
+    if result.modified_count != 1:
+        raise HTTPException(
+            status_code=409,
+            detail="No matching pending authority request was found.",
+        )
+    return {"message": "Authority account approved and activated."}
+
+
+@router.post("/register", status_code=status.HTTP_201_CREATED)
+def register(request: RegisterRequest):
+    email = normalize_email(request.email)
+    name = request.name.strip()
+
+    if len(name) < 2:
+        raise HTTPException(status_code=422, detail="Enter your full name.")
+
+    # Developer registration is invitation-only. Authority accounts remain pending
+    # until an administrator verifies eligibility and approves the request.
+    invitation = None
+    if request.requested_role == "developer":
+        if not request.invitation_token:
+            raise HTTPException(status_code=403, detail="A valid developer invitation is required.")
+        now = datetime.now(timezone.utc)
+        invitation = invitations.find_one_and_update(
+            {
+                "token_hash": token_digest(request.invitation_token),
+                "consumed_at": None,
+                "expires_at": {"$gt": now},
+            },
+            {"$set": {"consumed_at": now, "consumed_by_email": email}},
+            return_document=ReturnDocument.BEFORE,
+        )
+        if not invitation:
+            raise HTTPException(status_code=403, detail="Developer invitation is invalid, expired, or already used.")
+
+    privileged_request = request.requested_role in {"authority", "developer"}
+    user = {
+        "name": name,
+        "email": email,
+        "password_hash": password_hash.hash(request.password),
+        "role": "user",
+        "requested_role": request.requested_role,
+        "status": "pending" if privileged_request else "active",
+        "created_at": datetime.now(timezone.utc),
+    }
+
+    try:
+        users.create_index("email", unique=True, name="uq_users_email")
+        result = users.insert_one(user)
+    except DuplicateKeyError:
+        # If account creation fails because the email already exists, return
+        # this invitation to the unused state. Match the exact claim made by
+        # this request so we cannot undo another request's consumption.
+        if invitation is not None:
+            invitations.update_one(
+                {
+                    "token_hash": token_digest(request.invitation_token or ""),
+                    "consumed_at": now,
+                    "consumed_by_email": email,
+                },
+                {
+                    "$set": {"consumed_at": None},
+                    "$unset": {"consumed_by_email": ""},
+                },
+            )
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="An account with this email already exists.",
+        )
+
+    user["_id"] = result.inserted_id
+    return {
+        "message": (
+            "Authority request submitted. An administrator must verify eligibility before access is activated."
+            if request.requested_role == "authority"
+            else "Developer account created using an invitation."
+            if request.requested_role == "developer"
+            else "Account created successfully."
+        ),
+        "user": public_user(user),
+    }
+
+
+@router.post("/login")
+def login(request: LoginRequest):
+    email = normalize_email(request.email)
+    user = users.find_one({"email": email})
+
+    if not user or not password_hash.verify(
+        request.password, user.get("password_hash", "")
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid email or password.",
+        )
+
+    if user.get("status") != "active":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Your account is pending approval or has been disabled.",
+        )
+
+    token = create_access_token(user)
+    return {
+        "access_token": token,
+        "token_type": "bearer",
+        "expires_in": TOKEN_MINUTES * 60,
+        "user": public_user(user),
+    }
+
+
+@router.get("/me")
+def get_me(current_user: dict = Depends(get_current_user)):
+    return {"user": public_user(current_user)}
+
+def require_roles(*allowed_roles: str):
+    """Require an active authenticated account with an allowed role."""
+    def role_dependency(current_user: dict = Depends(get_current_user)) -> dict:
+        if current_user.get("role") not in allowed_roles:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Your account does not have permission for this operation.",
+            )
+        return current_user
+
+    return role_dependency

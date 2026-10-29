@@ -1,0 +1,63 @@
+from pathlib import Path
+from tempfile import NamedTemporaryFile
+import shutil
+
+from fastapi import APIRouter, File, HTTPException, UploadFile
+
+from backend.services.inference_service import run_video_inference
+
+router = APIRouter(prefix="/inference", tags=["Inference"])
+
+ALLOWED_SUFFIXES = {".mp4", ".avi", ".mov", ".mkv"}
+MAX_UPLOAD_BYTES = 500 * 1024 * 1024
+
+
+@router.post("/video")
+def process_video(file: UploadFile = File(...)):
+    suffix = Path(file.filename or "").suffix.lower()
+    if suffix not in ALLOWED_SUFFIXES:
+        raise HTTPException(
+            status_code=400,
+            detail="Unsupported video extension. Use MP4, AVI, MOV, or MKV.",
+        )
+
+    temp_path = None
+    try:
+        total_bytes = 0
+        with NamedTemporaryFile(
+            prefix="trafficai_upload_",
+            suffix=suffix,
+            delete=False,
+        ) as temp:
+            temp_path = Path(temp.name)
+            while True:
+                chunk = file.file.read(1024 * 1024)
+                if not chunk:
+                    break
+                total_bytes += len(chunk)
+                if total_bytes > MAX_UPLOAD_BYTES:
+                    raise HTTPException(
+                        status_code=413,
+                        detail="Video exceeds the 500 MiB upload limit.",
+                    )
+                temp.write(chunk)
+
+        if total_bytes == 0:
+            raise HTTPException(status_code=400, detail="Uploaded video is empty.")
+
+        result = run_video_inference(temp_path)
+        return {"status": "completed", **result}
+
+    except HTTPException:
+        raise
+    except (ValueError, FileNotFoundError) as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except Exception as exc:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Inference failed: {type(exc).__name__}: {exc}",
+        ) from exc
+    finally:
+        if temp_path is not None:
+            temp_path.unlink(missing_ok=True)
+        file.file.close()

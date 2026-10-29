@@ -1,0 +1,2197 @@
+[
+  {
+    "track_id": 3,
+    "first_timestamp": 0.0,
+    "last_timestamp": 8.3,
+    "sample_bbox_xyxy": [
+      547.724609375,
+      188.27090454101562,
+      598.197265625,
+      231.27743530273438
+    ],
+    "class_counts": {
+      "car": 250
+    },
+    "observed_frames": 250,
+    "first_frame": 0,
+    "last_frame": 249,
+    "mean_confidence": 0.8429,
+    "max_confidence": 0.9139
+  },
+  {
+    "track_id": 4,
+    "first_timestamp": 0.0,
+    "last_timestamp": 8.3,
+    "sample_bbox_xyxy": [
+      629.4149780273438,
+      202.52745056152344,
+      669.4517211914062,
+      237.28428649902344
+    ],
+    "class_counts": {
+      "car": 250
+    },
+    "observed_frames": 250,
+    "first_frame": 0,
+    "last_frame": 249,
+    "mean_confidence": 0.7837,
+    "max_confidence": 0.9089
+  },
+  {
+    "track_id": 8,
+    "first_timestamp": 0.0,
+    "last_timestamp": 8.3,
+    "sample_bbox_xyxy": [
+      891.4291381835938,
+      41.42240524291992,
+      918.3489379882812,
+      100.29353332519531
+    ],
+    "class_counts": {
+      "traffic sign": 250
+    },
+    "observed_frames": 250,
+    "first_frame": 0,
+    "last_frame": 249,
+    "mean_confidence": 0.5084,
+    "max_confidence": 0.6004
+  },
+  {
+    "track_id": 2,
+    "first_timestamp": 0.0,
+    "last_timestamp": 8.1,
+    "sample_bbox_xyxy": [
+      967.8359985351562,
+      235.98779296875,
+      1009.0775756835938,
+      268.1669006347656
+    ],
+    "class_counts": {
+      "car": 243
+    },
+    "observed_frames": 243,
+    "first_frame": 0,
+    "last_frame": 243,
+    "mean_confidence": 0.6665,
+    "max_confidence": 0.8764
+  },
+  {
+    "track_id": 1,
+    "first_timestamp": 0.0,
+    "last_timestamp": 8.3,
+    "sample_bbox_xyxy": [
+      168.7437286376953,
+      215.67376708984375,
+      285.8120422363281,
+      287.42999267578125
+    ],
+    "class_counts": {
+      "car": 238
+    },
+    "observed_frames": 238,
+    "first_frame": 0,
+    "last_frame": 249,
+    "mean_confidence": 0.8721,
+    "max_confidence": 0.9306
+  },
+  {
+    "track_id": 158,
+    "first_timestamp": 3.767,
+    "last_timestamp": 8.3,
+    "sample_bbox_xyxy": [
+      761.3854370117188,
+      196.1748809814453,
+      814.1010131835938,
+      223.14166259765625
+    ],
+    "class_counts": {
+      "car": 137
+    },
+    "observed_frames": 137,
+    "first_frame": 113,
+    "last_frame": 249,
+    "mean_confidence": 0.4679,
+    "max_confidence": 0.6199
+  },
+  {
+    "track_id": 148,
+    "first_timestamp": 3.667,
+    "last_timestamp": 8.3,
+    "sample_bbox_xyxy": [
+      1165.7650146484375,
+      350.50421142578125,
+      1276.5655517578125,
+      423.137451171875
+    ],
+    "class_counts": {
+      "car": 133
+    },
+    "observed_frames": 133,
+    "first_frame": 110,
+    "last_frame": 249,
+    "mean_confidence": 0.7353,
+    "max_confidence": 0.8704
+  },
+  {
+    "track_id": 28,
+    "first_timestamp": 0.367,
+    "last_timestamp": 5.1,
+    "sample_bbox_xyxy": [
+      600.7290649414062,
+      179.4502410888672,
+      630.0877685546875,
+      194.86277770996094
+    ],
+    "class_counts": {
+      "car": 129
+    },
+    "observed_frames": 129,
+    "first_frame": 11,
+    "last_frame": 153,
+    "mean_confidence": 0.5328,
+    "max_confidence": 0.6889
+  },
+  {
+    "track_id": 116,
+    "first_timestamp": 3.167,
+    "last_timestamp": 7.7,
+    "sample_bbox_xyxy": [
+      1166.151611328125,
+      339.5340881347656,
+      1279.9794921875,
+      428.061279296875
+    ],
+    "class_counts": {
+      "car": 12,
+      "motorcycle": 108
+    },
+    "observed_frames": 120,
+    "first_frame": 95,
+    "last_frame": 231,
+    "mean_confidence": 0.6205,
+    "max_confidence": 0.7927
+  },
+  {
+    "track_id": 94,
+    "first_timestamp": 2.767,
+    "last_timestamp": 7.533,
+    "sample_bbox_xyxy": [
+      650.670654296875,
+      188.28713989257812,
+      672.6161499023438,
+      205.9091033935547
+    ],
+    "class_counts": {
+      "car": 102,
+      "autorickshaw": 13
+    },
+    "observed_frames": 115,
+    "first_frame": 83,
+    "last_frame": 226,
+    "mean_confidence": 0.4711,
+    "max_confidence": 0.7062
+  },
+  {
+    "track_id": 146,
+    "first_timestamp": 3.633,
+    "last_timestamp": 8.3,
+    "sample_bbox_xyxy": [
+      558.1069946289062,
+      0.3275459408760071,
+      583.8698120117188,
+      52.12836837768555
+    ],
+    "class_counts": {
+      "traffic light": 105,
+      "traffic sign": 4
+    },
+    "observed_frames": 109,
+    "first_frame": 109,
+    "last_frame": 249,
+    "mean_confidence": 0.3229,
+    "max_confidence": 0.399
+  },
+  {
+    "track_id": 31,
+    "first_timestamp": 0.433,
+    "last_timestamp": 3.767,
+    "sample_bbox_xyxy": [
+      5.3823065757751465,
+      422.2094421386719,
+      351.0536804199219,
+      612.370849609375
+    ],
+    "class_counts": {
+      "car": 101
+    },
+    "observed_frames": 101,
+    "first_frame": 13,
+    "last_frame": 113,
+    "mean_confidence": 0.8719,
+    "max_confidence": 0.9322
+  },
+  {
+    "track_id": 216,
+    "first_timestamp": 5.0,
+    "last_timestamp": 8.3,
+    "sample_bbox_xyxy": [
+      0.0,
+      331.36871337890625,
+      107.27423858642578,
+      710.9996948242188
+    ],
+    "class_counts": {
+      "car": 100
+    },
+    "observed_frames": 100,
+    "first_frame": 150,
+    "last_frame": 249,
+    "mean_confidence": 0.9141,
+    "max_confidence": 0.9353
+  },
+  {
+    "track_id": 131,
+    "first_timestamp": 3.433,
+    "last_timestamp": 6.667,
+    "sample_bbox_xyxy": [
+      1018.0377807617188,
+      335.1522521972656,
+      1207.477294921875,
+      406.5223083496094
+    ],
+    "class_counts": {
+      "car": 98
+    },
+    "observed_frames": 98,
+    "first_frame": 103,
+    "last_frame": 200,
+    "mean_confidence": 0.8347,
+    "max_confidence": 0.924
+  },
+  {
+    "track_id": 210,
+    "first_timestamp": 4.767,
+    "last_timestamp": 8.3,
+    "sample_bbox_xyxy": [
+      599.5900268554688,
+      181.68508911132812,
+      626.0353393554688,
+      207.2995147705078
+    ],
+    "class_counts": {
+      "car": 96
+    },
+    "observed_frames": 96,
+    "first_frame": 143,
+    "last_frame": 249,
+    "mean_confidence": 0.7302,
+    "max_confidence": 0.8323
+  },
+  {
+    "track_id": 43,
+    "first_timestamp": 1.233,
+    "last_timestamp": 4.7,
+    "sample_bbox_xyxy": [
+      780.1393432617188,
+      197.10760498046875,
+      812.5179443359375,
+      214.85647583007812
+    ],
+    "class_counts": {
+      "car": 91
+    },
+    "observed_frames": 91,
+    "first_frame": 37,
+    "last_frame": 141,
+    "mean_confidence": 0.344,
+    "max_confidence": 0.4285
+  },
+  {
+    "track_id": 6,
+    "first_timestamp": 0.0,
+    "last_timestamp": 2.9,
+    "sample_bbox_xyxy": [
+      862.5325927734375,
+      217.7650146484375,
+      893.1724853515625,
+      241.471435546875
+    ],
+    "class_counts": {
+      "car": 88
+    },
+    "observed_frames": 88,
+    "first_frame": 0,
+    "last_frame": 87,
+    "mean_confidence": 0.4708,
+    "max_confidence": 0.6655
+  },
+  {
+    "track_id": 47,
+    "first_timestamp": 1.3,
+    "last_timestamp": 4.2,
+    "sample_bbox_xyxy": [
+      971.9029541015625,
+      428.05841064453125,
+      1197.18896484375,
+      625.1528930664062
+    ],
+    "class_counts": {
+      "car": 88
+    },
+    "observed_frames": 88,
+    "first_frame": 39,
+    "last_frame": 126,
+    "mean_confidence": 0.8227,
+    "max_confidence": 0.927
+  },
+  {
+    "track_id": 33,
+    "first_timestamp": 0.467,
+    "last_timestamp": 3.7,
+    "sample_bbox_xyxy": [
+      1075.9866943359375,
+      319.8346252441406,
+      1220.8616943359375,
+      414.4920959472656
+    ],
+    "class_counts": {
+      "car": 87
+    },
+    "observed_frames": 87,
+    "first_frame": 14,
+    "last_frame": 111,
+    "mean_confidence": 0.7669,
+    "max_confidence": 0.9172
+  },
+  {
+    "track_id": 50,
+    "first_timestamp": 1.5,
+    "last_timestamp": 4.7,
+    "sample_bbox_xyxy": [
+      1015.5055541992188,
+      324.746337890625,
+      1161.854736328125,
+      404.10662841796875
+    ],
+    "class_counts": {
+      "car": 87
+    },
+    "observed_frames": 87,
+    "first_frame": 45,
+    "last_frame": 141,
+    "mean_confidence": 0.7201,
+    "max_confidence": 0.9066
+  },
+  {
+    "track_id": 233,
+    "first_timestamp": 5.6,
+    "last_timestamp": 8.3,
+    "sample_bbox_xyxy": [
+      646.5933837890625,
+      194.8159942626953,
+      677.5469360351562,
+      218.21070861816406
+    ],
+    "class_counts": {
+      "car": 80
+    },
+    "observed_frames": 80,
+    "first_frame": 168,
+    "last_frame": 249,
+    "mean_confidence": 0.5662,
+    "max_confidence": 0.7305
+  },
+  {
+    "track_id": 135,
+    "first_timestamp": 3.5,
+    "last_timestamp": 6.933,
+    "sample_bbox_xyxy": [
+      1147.6551513671875,
+      341.3387145996094,
+      1197.65380859375,
+      417.3614196777344
+    ],
+    "class_counts": {
+      "rider": 2,
+      "motorcycle": 62
+    },
+    "observed_frames": 64,
+    "first_frame": 105,
+    "last_frame": 208,
+    "mean_confidence": 0.4972,
+    "max_confidence": 0.7303
+  },
+  {
+    "track_id": 273,
+    "first_timestamp": 6.367,
+    "last_timestamp": 8.3,
+    "sample_bbox_xyxy": [
+      1039.79443359375,
+      287.218505859375,
+      1127.1092529296875,
+      345.06024169921875
+    ],
+    "class_counts": {
+      "car": 59
+    },
+    "observed_frames": 59,
+    "first_frame": 191,
+    "last_frame": 249,
+    "mean_confidence": 0.7071,
+    "max_confidence": 0.8618
+  },
+  {
+    "track_id": 48,
+    "first_timestamp": 1.3,
+    "last_timestamp": 3.367,
+    "sample_bbox_xyxy": [
+      816.3326416015625,
+      215.10214233398438,
+      854.8807373046875,
+      239.77261352539062
+    ],
+    "class_counts": {
+      "car": 53
+    },
+    "observed_frames": 53,
+    "first_frame": 39,
+    "last_frame": 101,
+    "mean_confidence": 0.409,
+    "max_confidence": 0.6043
+  },
+  {
+    "track_id": 5,
+    "first_timestamp": 0.0,
+    "last_timestamp": 1.933,
+    "sample_bbox_xyxy": [
+      837.9898681640625,
+      221.37127685546875,
+      873.4442138671875,
+      246.26611328125
+    ],
+    "class_counts": {
+      "car": 50
+    },
+    "observed_frames": 50,
+    "first_frame": 0,
+    "last_frame": 58,
+    "mean_confidence": 0.6059,
+    "max_confidence": 0.7415
+  },
+  {
+    "track_id": 9,
+    "first_timestamp": 0.0,
+    "last_timestamp": 1.7,
+    "sample_bbox_xyxy": [
+      629.4397583007812,
+      199.48876953125,
+      689.6412963867188,
+      236.0621337890625
+    ],
+    "class_counts": {
+      "car": 50
+    },
+    "observed_frames": 50,
+    "first_frame": 0,
+    "last_frame": 51,
+    "mean_confidence": 0.53,
+    "max_confidence": 0.7662
+  },
+  {
+    "track_id": 154,
+    "first_timestamp": 3.767,
+    "last_timestamp": 6.2,
+    "sample_bbox_xyxy": [
+      1117.506103515625,
+      339.6697692871094,
+      1152.34912109375,
+      412.5760192871094
+    ],
+    "class_counts": {
+      "rider": 50
+    },
+    "observed_frames": 50,
+    "first_frame": 113,
+    "last_frame": 186,
+    "mean_confidence": 0.4447,
+    "max_confidence": 0.6122
+  },
+  {
+    "track_id": 29,
+    "first_timestamp": 0.367,
+    "last_timestamp": 2.0,
+    "sample_bbox_xyxy": [
+      1186.368896484375,
+      330.74151611328125,
+      1280.0,
+      418.46112060546875
+    ],
+    "class_counts": {
+      "car": 46
+    },
+    "observed_frames": 46,
+    "first_frame": 11,
+    "last_frame": 60,
+    "mean_confidence": 0.702,
+    "max_confidence": 0.8709
+  },
+  {
+    "track_id": 268,
+    "first_timestamp": 6.267,
+    "last_timestamp": 8.167,
+    "sample_bbox_xyxy": [
+      644.291259765625,
+      196.2019805908203,
+      684.7728271484375,
+      220.7019805908203
+    ],
+    "class_counts": {
+      "car": 43
+    },
+    "observed_frames": 43,
+    "first_frame": 188,
+    "last_frame": 245,
+    "mean_confidence": 0.4653,
+    "max_confidence": 0.5979
+  },
+  {
+    "track_id": 115,
+    "first_timestamp": 3.133,
+    "last_timestamp": 4.7,
+    "sample_bbox_xyxy": [
+      1102.8094482421875,
+      356.14849853515625,
+      1166.3321533203125,
+      418.4897155761719
+    ],
+    "class_counts": {
+      "car": 3,
+      "motorcycle": 37
+    },
+    "observed_frames": 40,
+    "first_frame": 94,
+    "last_frame": 141,
+    "mean_confidence": 0.5157,
+    "max_confidence": 0.7219
+  },
+  {
+    "track_id": 304,
+    "first_timestamp": 7.167,
+    "last_timestamp": 8.3,
+    "sample_bbox_xyxy": [
+      1173.4486083984375,
+      350.2232666015625,
+      1280.0,
+      412.1573486328125
+    ],
+    "class_counts": {
+      "car": 35
+    },
+    "observed_frames": 35,
+    "first_frame": 215,
+    "last_frame": 249,
+    "mean_confidence": 0.7463,
+    "max_confidence": 0.8385
+  },
+  {
+    "track_id": 23,
+    "first_timestamp": 0.3,
+    "last_timestamp": 2.367,
+    "sample_bbox_xyxy": [
+      1137.6162109375,
+      326.6181640625,
+      1273.859375,
+      418.6578063964844
+    ],
+    "class_counts": {
+      "car": 34
+    },
+    "observed_frames": 34,
+    "first_frame": 9,
+    "last_frame": 71,
+    "mean_confidence": 0.6393,
+    "max_confidence": 0.8761
+  },
+  {
+    "track_id": 119,
+    "first_timestamp": 3.267,
+    "last_timestamp": 4.867,
+    "sample_bbox_xyxy": [
+      1068.6640625,
+      354.741943359375,
+      1148.0687255859375,
+      399.181640625
+    ],
+    "class_counts": {
+      "car": 34
+    },
+    "observed_frames": 34,
+    "first_frame": 98,
+    "last_frame": 146,
+    "mean_confidence": 0.597,
+    "max_confidence": 0.8769
+  },
+  {
+    "track_id": 202,
+    "first_timestamp": 4.667,
+    "last_timestamp": 5.867,
+    "sample_bbox_xyxy": [
+      970.1339111328125,
+      328.761962890625,
+      1279.4197998046875,
+      422.4900817871094
+    ],
+    "class_counts": {
+      "car": 33
+    },
+    "observed_frames": 33,
+    "first_frame": 140,
+    "last_frame": 176,
+    "mean_confidence": 0.6761,
+    "max_confidence": 0.9127
+  },
+  {
+    "track_id": 263,
+    "first_timestamp": 6.2,
+    "last_timestamp": 7.6,
+    "sample_bbox_xyxy": [
+      862.4957275390625,
+      317.27850341796875,
+      903.0281982421875,
+      392.740478515625
+    ],
+    "class_counts": {
+      "rider": 26,
+      "motorcycle": 4
+    },
+    "observed_frames": 30,
+    "first_frame": 186,
+    "last_frame": 228,
+    "mean_confidence": 0.4249,
+    "max_confidence": 0.5868
+  },
+  {
+    "track_id": 54,
+    "first_timestamp": 1.667,
+    "last_timestamp": 2.633,
+    "sample_bbox_xyxy": [
+      647.9548950195312,
+      281.842041015625,
+      838.4061279296875,
+      372.8021240234375
+    ],
+    "class_counts": {
+      "car": 29
+    },
+    "observed_frames": 29,
+    "first_frame": 50,
+    "last_frame": 79,
+    "mean_confidence": 0.5615,
+    "max_confidence": 0.8079
+  },
+  {
+    "track_id": 271,
+    "first_timestamp": 6.333,
+    "last_timestamp": 7.2,
+    "sample_bbox_xyxy": [
+      594.8801879882812,
+      182.57789611816406,
+      624.5860595703125,
+      211.03857421875
+    ],
+    "class_counts": {
+      "car": 25
+    },
+    "observed_frames": 25,
+    "first_frame": 190,
+    "last_frame": 216,
+    "mean_confidence": 0.5567,
+    "max_confidence": 0.8315
+  },
+  {
+    "track_id": 62,
+    "first_timestamp": 2.333,
+    "last_timestamp": 3.767,
+    "sample_bbox_xyxy": [
+      380.00775146484375,
+      267.3673400878906,
+      515.9974975585938,
+      358.3573303222656
+    ],
+    "class_counts": {
+      "car": 23
+    },
+    "observed_frames": 23,
+    "first_frame": 70,
+    "last_frame": 113,
+    "mean_confidence": 0.5795,
+    "max_confidence": 0.8493
+  },
+  {
+    "track_id": 298,
+    "first_timestamp": 7.067,
+    "last_timestamp": 8.3,
+    "sample_bbox_xyxy": [
+      669.530517578125,
+      195.02606201171875,
+      690.2330932617188,
+      235.6611785888672
+    ],
+    "class_counts": {
+      "person": 23
+    },
+    "observed_frames": 23,
+    "first_frame": 212,
+    "last_frame": 249,
+    "mean_confidence": 0.3501,
+    "max_confidence": 0.4341
+  },
+  {
+    "track_id": 7,
+    "first_timestamp": 0.0,
+    "last_timestamp": 0.7,
+    "sample_bbox_xyxy": [
+      1170.1395263671875,
+      283.81695556640625,
+      1280.0,
+      494.35040283203125
+    ],
+    "class_counts": {
+      "car": 22
+    },
+    "observed_frames": 22,
+    "first_frame": 0,
+    "last_frame": 21,
+    "mean_confidence": 0.7064,
+    "max_confidence": 0.8445
+  },
+  {
+    "track_id": 245,
+    "first_timestamp": 5.867,
+    "last_timestamp": 6.767,
+    "sample_bbox_xyxy": [
+      910.7501220703125,
+      321.5172424316406,
+      955.38330078125,
+      395.966796875
+    ],
+    "class_counts": {
+      "rider": 22
+    },
+    "observed_frames": 22,
+    "first_frame": 176,
+    "last_frame": 203,
+    "mean_confidence": 0.4365,
+    "max_confidence": 0.5604
+  },
+  {
+    "track_id": 325,
+    "first_timestamp": 7.6,
+    "last_timestamp": 8.3,
+    "sample_bbox_xyxy": [
+      1.0478743314743042,
+      595.8201904296875,
+      175.0966339111328,
+      718.1923217773438
+    ],
+    "class_counts": {
+      "motorcycle": 1,
+      "car": 21
+    },
+    "observed_frames": 22,
+    "first_frame": 228,
+    "last_frame": 249,
+    "mean_confidence": 0.8346,
+    "max_confidence": 0.9236
+  },
+  {
+    "track_id": 103,
+    "first_timestamp": 2.867,
+    "last_timestamp": 3.6,
+    "sample_bbox_xyxy": [
+      762.2896728515625,
+      197.62332153320312,
+      803.3174438476562,
+      218.13262939453125
+    ],
+    "class_counts": {
+      "car": 18
+    },
+    "observed_frames": 18,
+    "first_frame": 86,
+    "last_frame": 108,
+    "mean_confidence": 0.3109,
+    "max_confidence": 0.3683
+  },
+  {
+    "track_id": 12,
+    "first_timestamp": 0.0,
+    "last_timestamp": 0.6,
+    "sample_bbox_xyxy": [
+      612.7772827148438,
+      181.6060333251953,
+      635.5817260742188,
+      195.1749725341797
+    ],
+    "class_counts": {
+      "car": 17
+    },
+    "observed_frames": 17,
+    "first_frame": 0,
+    "last_frame": 18,
+    "mean_confidence": 0.3935,
+    "max_confidence": 0.5375
+  },
+  {
+    "track_id": 72,
+    "first_timestamp": 2.567,
+    "last_timestamp": 3.167,
+    "sample_bbox_xyxy": [
+      604.192138671875,
+      179.8218536376953,
+      632.0506591796875,
+      198.6681365966797
+    ],
+    "class_counts": {
+      "car": 17
+    },
+    "observed_frames": 17,
+    "first_frame": 77,
+    "last_frame": 95,
+    "mean_confidence": 0.4523,
+    "max_confidence": 0.5656
+  },
+  {
+    "track_id": 164,
+    "first_timestamp": 3.933,
+    "last_timestamp": 4.6,
+    "sample_bbox_xyxy": [
+      1123.4559326171875,
+      339.8238525390625,
+      1160.7196044921875,
+      412.2065124511719
+    ],
+    "class_counts": {
+      "rider": 16
+    },
+    "observed_frames": 16,
+    "first_frame": 118,
+    "last_frame": 138,
+    "mean_confidence": 0.4151,
+    "max_confidence": 0.4718
+  },
+  {
+    "track_id": 251,
+    "first_timestamp": 5.933,
+    "last_timestamp": 6.767,
+    "sample_bbox_xyxy": [
+      839.7510375976562,
+      326.2613525390625,
+      936.445068359375,
+      401.4638366699219
+    ],
+    "class_counts": {
+      "motorcycle": 13
+    },
+    "observed_frames": 13,
+    "first_frame": 178,
+    "last_frame": 203,
+    "mean_confidence": 0.4189,
+    "max_confidence": 0.5519
+  },
+  {
+    "track_id": 289,
+    "first_timestamp": 6.9,
+    "last_timestamp": 7.533,
+    "sample_bbox_xyxy": [
+      1223.315185546875,
+      350.05841064453125,
+      1279.5322265625,
+      418.8973388671875
+    ],
+    "class_counts": {
+      "car": 13
+    },
+    "observed_frames": 13,
+    "first_frame": 207,
+    "last_frame": 226,
+    "mean_confidence": 0.5181,
+    "max_confidence": 0.7075
+  },
+  {
+    "track_id": 339,
+    "first_timestamp": 7.833,
+    "last_timestamp": 8.3,
+    "sample_bbox_xyxy": [
+      1243.6571044921875,
+      347.9603576660156,
+      1279.9483642578125,
+      434.7582092285156
+    ],
+    "class_counts": {
+      "car": 12,
+      "motorcycle": 1
+    },
+    "observed_frames": 13,
+    "first_frame": 235,
+    "last_frame": 249,
+    "mean_confidence": 0.669,
+    "max_confidence": 0.8028
+  },
+  {
+    "track_id": 11,
+    "first_timestamp": 0.0,
+    "last_timestamp": 0.567,
+    "sample_bbox_xyxy": [
+      789.2654418945312,
+      201.3676300048828,
+      821.6942749023438,
+      217.45298767089844
+    ],
+    "class_counts": {
+      "car": 12
+    },
+    "observed_frames": 12,
+    "first_frame": 0,
+    "last_frame": 17,
+    "mean_confidence": 0.2928,
+    "max_confidence": 0.3317
+  },
+  {
+    "track_id": 351,
+    "first_timestamp": 7.967,
+    "last_timestamp": 8.3,
+    "sample_bbox_xyxy": [
+      405.6541442871094,
+      297.32452392578125,
+      540.4308471679688,
+      380.45843505859375
+    ],
+    "class_counts": {
+      "motorcycle": 11
+    },
+    "observed_frames": 11,
+    "first_frame": 239,
+    "last_frame": 249,
+    "mean_confidence": 0.6173,
+    "max_confidence": 0.7631
+  },
+  {
+    "track_id": 37,
+    "first_timestamp": 0.9,
+    "last_timestamp": 1.167,
+    "sample_bbox_xyxy": [
+      822.2810668945312,
+      213.60198974609375,
+      869.3728637695312,
+      239.38824462890625
+    ],
+    "class_counts": {
+      "car": 9
+    },
+    "observed_frames": 9,
+    "first_frame": 27,
+    "last_frame": 35,
+    "mean_confidence": 0.4712,
+    "max_confidence": 0.5418
+  },
+  {
+    "track_id": 51,
+    "first_timestamp": 1.6,
+    "last_timestamp": 1.9,
+    "sample_bbox_xyxy": [
+      613.9157104492188,
+      207.03121948242188,
+      676.4688720703125,
+      247.22457885742188
+    ],
+    "class_counts": {
+      "car": 9
+    },
+    "observed_frames": 9,
+    "first_frame": 48,
+    "last_frame": 57,
+    "mean_confidence": 0.4306,
+    "max_confidence": 0.5022
+  },
+  {
+    "track_id": 132,
+    "first_timestamp": 3.433,
+    "last_timestamp": 4.7,
+    "sample_bbox_xyxy": [
+      1014.0629272460938,
+      334.4275817871094,
+      1170.85498046875,
+      397.8132019042969
+    ],
+    "class_counts": {
+      "car": 1,
+      "motorcycle": 8
+    },
+    "observed_frames": 9,
+    "first_frame": 103,
+    "last_frame": 141,
+    "mean_confidence": 0.4694,
+    "max_confidence": 0.5897
+  },
+  {
+    "track_id": 195,
+    "first_timestamp": 4.6,
+    "last_timestamp": 4.867,
+    "sample_bbox_xyxy": [
+      1015.6952514648438,
+      315.7415771484375,
+      1056.4730224609375,
+      409.8626403808594
+    ],
+    "class_counts": {
+      "rider": 9
+    },
+    "observed_frames": 9,
+    "first_frame": 138,
+    "last_frame": 146,
+    "mean_confidence": 0.3501,
+    "max_confidence": 0.4356
+  },
+  {
+    "track_id": 287,
+    "first_timestamp": 6.9,
+    "last_timestamp": 7.3,
+    "sample_bbox_xyxy": [
+      644.2027587890625,
+      181.1597900390625,
+      668.5570068359375,
+      199.48434448242188
+    ],
+    "class_counts": {
+      "car": 9
+    },
+    "observed_frames": 9,
+    "first_frame": 207,
+    "last_frame": 219,
+    "mean_confidence": 0.2812,
+    "max_confidence": 0.3323
+  },
+  {
+    "track_id": 10,
+    "first_timestamp": 0.0,
+    "last_timestamp": 0.233,
+    "sample_bbox_xyxy": [
+      630.4506225585938,
+      201.2051239013672,
+      672.6792602539062,
+      237.5415496826172
+    ],
+    "class_counts": {
+      "motorcycle": 8
+    },
+    "observed_frames": 8,
+    "first_frame": 0,
+    "last_frame": 7,
+    "mean_confidence": 0.4715,
+    "max_confidence": 0.5208
+  },
+  {
+    "track_id": 95,
+    "first_timestamp": 2.8,
+    "last_timestamp": 3.367,
+    "sample_bbox_xyxy": [
+      761.1087646484375,
+      199.95986938476562,
+      825.7622680664062,
+      233.1945037841797
+    ],
+    "class_counts": {
+      "car": 8
+    },
+    "observed_frames": 8,
+    "first_frame": 84,
+    "last_frame": 101,
+    "mean_confidence": 0.3592,
+    "max_confidence": 0.4518
+  },
+  {
+    "track_id": 168,
+    "first_timestamp": 3.967,
+    "last_timestamp": 4.2,
+    "sample_bbox_xyxy": [
+      878.3739624023438,
+      212.05123901367188,
+      907.0365600585938,
+      238.32215881347656
+    ],
+    "class_counts": {
+      "motorcycle": 8
+    },
+    "observed_frames": 8,
+    "first_frame": 119,
+    "last_frame": 126,
+    "mean_confidence": 0.3649,
+    "max_confidence": 0.3885
+  },
+  {
+    "track_id": 93,
+    "first_timestamp": 2.767,
+    "last_timestamp": 3.267,
+    "sample_bbox_xyxy": [
+      812.9100952148438,
+      202.59373474121094,
+      844.114501953125,
+      224.99330139160156
+    ],
+    "class_counts": {
+      "car": 7
+    },
+    "observed_frames": 7,
+    "first_frame": 83,
+    "last_frame": 98,
+    "mean_confidence": 0.3864,
+    "max_confidence": 0.4694
+  },
+  {
+    "track_id": 170,
+    "first_timestamp": 4.0,
+    "last_timestamp": 4.367,
+    "sample_bbox_xyxy": [
+      1085.5714111328125,
+      345.0108337402344,
+      1276.829833984375,
+      417.1586608886719
+    ],
+    "class_counts": {
+      "car": 7
+    },
+    "observed_frames": 7,
+    "first_frame": 120,
+    "last_frame": 131,
+    "mean_confidence": 0.6022,
+    "max_confidence": 0.6953
+  },
+  {
+    "track_id": 191,
+    "first_timestamp": 4.367,
+    "last_timestamp": 4.7,
+    "sample_bbox_xyxy": [
+      654.2770385742188,
+      191.39816284179688,
+      672.8973388671875,
+      211.47402954101562
+    ],
+    "class_counts": {
+      "car": 7
+    },
+    "observed_frames": 7,
+    "first_frame": 131,
+    "last_frame": 141,
+    "mean_confidence": 0.3156,
+    "max_confidence": 0.3786
+  },
+  {
+    "track_id": 284,
+    "first_timestamp": 6.733,
+    "last_timestamp": 6.933,
+    "sample_bbox_xyxy": [
+      595.7291259765625,
+      181.18038940429688,
+      627.9212646484375,
+      197.9708709716797
+    ],
+    "class_counts": {
+      "car": 7
+    },
+    "observed_frames": 7,
+    "first_frame": 202,
+    "last_frame": 208,
+    "mean_confidence": 0.341,
+    "max_confidence": 0.3953
+  },
+  {
+    "track_id": 360,
+    "first_timestamp": 8.1,
+    "last_timestamp": 8.3,
+    "sample_bbox_xyxy": [
+      0.3803601861000061,
+      432.8007507324219,
+      270.48162841796875,
+      633.4678955078125
+    ],
+    "class_counts": {
+      "car": 7
+    },
+    "observed_frames": 7,
+    "first_frame": 243,
+    "last_frame": 249,
+    "mean_confidence": 0.8248,
+    "max_confidence": 0.9071
+  },
+  {
+    "track_id": 186,
+    "first_timestamp": 4.267,
+    "last_timestamp": 4.7,
+    "sample_bbox_xyxy": [
+      1080.8646240234375,
+      335.67626953125,
+      1112.630615234375,
+      410.4259338378906
+    ],
+    "class_counts": {
+      "rider": 6
+    },
+    "observed_frames": 6,
+    "first_frame": 128,
+    "last_frame": 141,
+    "mean_confidence": 0.3863,
+    "max_confidence": 0.446
+  },
+  {
+    "track_id": 282,
+    "first_timestamp": 6.667,
+    "last_timestamp": 6.833,
+    "sample_bbox_xyxy": [
+      743.8801879882812,
+      331.1351013183594,
+      847.1450805664062,
+      396.6141357421875
+    ],
+    "class_counts": {
+      "motorcycle": 6
+    },
+    "observed_frames": 6,
+    "first_frame": 200,
+    "last_frame": 205,
+    "mean_confidence": 0.4327,
+    "max_confidence": 0.5153
+  },
+  {
+    "track_id": 272,
+    "first_timestamp": 6.333,
+    "last_timestamp": 6.567,
+    "sample_bbox_xyxy": [
+      643.5115966796875,
+      197.02813720703125,
+      689.3483276367188,
+      230.37106323242188
+    ],
+    "class_counts": {
+      "car": 5
+    },
+    "observed_frames": 5,
+    "first_frame": 190,
+    "last_frame": 197,
+    "mean_confidence": 0.3317,
+    "max_confidence": 0.3907
+  },
+  {
+    "track_id": 143,
+    "first_timestamp": 3.6,
+    "last_timestamp": 3.867,
+    "sample_bbox_xyxy": [
+      1133.6007080078125,
+      341.423583984375,
+      1168.827880859375,
+      415.1873474121094
+    ],
+    "class_counts": {
+      "rider": 4
+    },
+    "observed_frames": 4,
+    "first_frame": 108,
+    "last_frame": 116,
+    "mean_confidence": 0.3258,
+    "max_confidence": 0.42
+  },
+  {
+    "track_id": 178,
+    "first_timestamp": 4.167,
+    "last_timestamp": 4.433,
+    "sample_bbox_xyxy": [
+      1088.5401611328125,
+      335.8525695800781,
+      1121.51806640625,
+      412.7618103027344
+    ],
+    "class_counts": {
+      "rider": 4
+    },
+    "observed_frames": 4,
+    "first_frame": 125,
+    "last_frame": 133,
+    "mean_confidence": 0.3819,
+    "max_confidence": 0.4017
+  },
+  {
+    "track_id": 240,
+    "first_timestamp": 5.833,
+    "last_timestamp": 5.933,
+    "sample_bbox_xyxy": [
+      932.5040893554688,
+      321.23846435546875,
+      959.6768188476562,
+      396.84442138671875
+    ],
+    "class_counts": {
+      "rider": 4
+    },
+    "observed_frames": 4,
+    "first_frame": 175,
+    "last_frame": 178,
+    "mean_confidence": 0.4328,
+    "max_confidence": 0.5307
+  },
+  {
+    "track_id": 288,
+    "first_timestamp": 6.9,
+    "last_timestamp": 7.167,
+    "sample_bbox_xyxy": [
+      1203.23681640625,
+      323.846435546875,
+      1279.5469970703125,
+      418.5776672363281
+    ],
+    "class_counts": {
+      "car": 4
+    },
+    "observed_frames": 4,
+    "first_frame": 207,
+    "last_frame": 215,
+    "mean_confidence": 0.5253,
+    "max_confidence": 0.7189
+  },
+  {
+    "track_id": 300,
+    "first_timestamp": 7.1,
+    "last_timestamp": 7.2,
+    "sample_bbox_xyxy": [
+      679.047119140625,
+      305.5243225097656,
+      762.20947265625,
+      392.4533996582031
+    ],
+    "class_counts": {
+      "motorcycle": 4
+    },
+    "observed_frames": 4,
+    "first_frame": 213,
+    "last_frame": 216,
+    "mean_confidence": 0.4505,
+    "max_confidence": 0.4945
+  },
+  {
+    "track_id": 316,
+    "first_timestamp": 7.433,
+    "last_timestamp": 7.533,
+    "sample_bbox_xyxy": [
+      0.0,
+      394.3729553222656,
+      53.37255096435547,
+      712.8482055664062
+    ],
+    "class_counts": {
+      "car": 4
+    },
+    "observed_frames": 4,
+    "first_frame": 223,
+    "last_frame": 226,
+    "mean_confidence": 0.6783,
+    "max_confidence": 0.7011
+  },
+  {
+    "track_id": 335,
+    "first_timestamp": 7.767,
+    "last_timestamp": 8.2,
+    "sample_bbox_xyxy": [
+      813.8102416992188,
+      197.20364379882812,
+      858.3477783203125,
+      220.82223510742188
+    ],
+    "class_counts": {
+      "car": 4
+    },
+    "observed_frames": 4,
+    "first_frame": 233,
+    "last_frame": 246,
+    "mean_confidence": 0.2842,
+    "max_confidence": 0.3431
+  },
+  {
+    "track_id": 338,
+    "first_timestamp": 7.833,
+    "last_timestamp": 7.933,
+    "sample_bbox_xyxy": [
+      1023.6106567382812,
+      333.857666015625,
+      1136.58837890625,
+      401.7662658691406
+    ],
+    "class_counts": {
+      "car": 4
+    },
+    "observed_frames": 4,
+    "first_frame": 235,
+    "last_frame": 238,
+    "mean_confidence": 0.5522,
+    "max_confidence": 0.6053
+  },
+  {
+    "track_id": 366,
+    "first_timestamp": 8.167,
+    "last_timestamp": 8.267,
+    "sample_bbox_xyxy": [
+      425.8955078125,
+      290.171875,
+      467.59173583984375,
+      372.7368469238281
+    ],
+    "class_counts": {
+      "rider": 4
+    },
+    "observed_frames": 4,
+    "first_frame": 245,
+    "last_frame": 248,
+    "mean_confidence": 0.4296,
+    "max_confidence": 0.4334
+  },
+  {
+    "track_id": 21,
+    "first_timestamp": 0.3,
+    "last_timestamp": 0.367,
+    "sample_bbox_xyxy": [
+      43.74756622314453,
+      418.4786071777344,
+      150.59471130371094,
+      676.8577880859375
+    ],
+    "class_counts": {
+      "car": 3
+    },
+    "observed_frames": 3,
+    "first_frame": 9,
+    "last_frame": 11,
+    "mean_confidence": 0.8899,
+    "max_confidence": 0.8936
+  },
+  {
+    "track_id": 22,
+    "first_timestamp": 0.3,
+    "last_timestamp": 0.367,
+    "sample_bbox_xyxy": [
+      837.0119018554688,
+      216.91244506835938,
+      893.3652954101562,
+      243.66720581054688
+    ],
+    "class_counts": {
+      "car": 3
+    },
+    "observed_frames": 3,
+    "first_frame": 9,
+    "last_frame": 11,
+    "mean_confidence": 0.5864,
+    "max_confidence": 0.593
+  },
+  {
+    "track_id": 32,
+    "first_timestamp": 0.433,
+    "last_timestamp": 0.5,
+    "sample_bbox_xyxy": [
+      1180.5362548828125,
+      333.96112060546875,
+      1279.3077392578125,
+      454.5773620605469
+    ],
+    "class_counts": {
+      "car": 3
+    },
+    "observed_frames": 3,
+    "first_frame": 13,
+    "last_frame": 15,
+    "mean_confidence": 0.359,
+    "max_confidence": 0.3623
+  },
+  {
+    "track_id": 281,
+    "first_timestamp": 6.6,
+    "last_timestamp": 6.667,
+    "sample_bbox_xyxy": [
+      800.3963012695312,
+      312.2040710449219,
+      830.9486694335938,
+      388.9728698730469
+    ],
+    "class_counts": {
+      "rider": 3
+    },
+    "observed_frames": 3,
+    "first_frame": 198,
+    "last_frame": 200,
+    "mean_confidence": 0.4723,
+    "max_confidence": 0.5406
+  },
+  {
+    "track_id": 321,
+    "first_timestamp": 7.467,
+    "last_timestamp": 7.533,
+    "sample_bbox_xyxy": [
+      597.4732055664062,
+      180.5120391845703,
+      621.1093139648438,
+      198.76596069335938
+    ],
+    "class_counts": {
+      "car": 3
+    },
+    "observed_frames": 3,
+    "first_frame": 224,
+    "last_frame": 226,
+    "mean_confidence": 0.3512,
+    "max_confidence": 0.3651
+  },
+  {
+    "track_id": 324,
+    "first_timestamp": 7.6,
+    "last_timestamp": 7.7,
+    "sample_bbox_xyxy": [
+      0.0,
+      404.89910888671875,
+      137.2362060546875,
+      685.6285400390625
+    ],
+    "class_counts": {
+      "car": 3
+    },
+    "observed_frames": 3,
+    "first_frame": 228,
+    "last_frame": 231,
+    "mean_confidence": 0.6327,
+    "max_confidence": 0.7472
+  },
+  {
+    "track_id": 328,
+    "first_timestamp": 7.633,
+    "last_timestamp": 7.7,
+    "sample_bbox_xyxy": [
+      19.106651306152344,
+      583.9295043945312,
+      211.83309936523438,
+      719.1847534179688
+    ],
+    "class_counts": {
+      "motorcycle": 3
+    },
+    "observed_frames": 3,
+    "first_frame": 229,
+    "last_frame": 231,
+    "mean_confidence": 0.5637,
+    "max_confidence": 0.5691
+  },
+  {
+    "track_id": 340,
+    "first_timestamp": 7.833,
+    "last_timestamp": 7.9,
+    "sample_bbox_xyxy": [
+      1243.1072998046875,
+      347.8148498535156,
+      1279.9952392578125,
+      434.9683532714844
+    ],
+    "class_counts": {
+      "motorcycle": 2,
+      "car": 1
+    },
+    "observed_frames": 3,
+    "first_frame": 235,
+    "last_frame": 237,
+    "mean_confidence": 0.3225,
+    "max_confidence": 0.341
+  },
+  {
+    "track_id": 122,
+    "first_timestamp": 3.333,
+    "last_timestamp": 3.367,
+    "sample_bbox_xyxy": [
+      58.12357711791992,
+      241.4647979736328,
+      206.64697265625,
+      347.17095947265625
+    ],
+    "class_counts": {
+      "car": 2
+    },
+    "observed_frames": 2,
+    "first_frame": 100,
+    "last_frame": 101,
+    "mean_confidence": 0.2925,
+    "max_confidence": 0.3186
+  },
+  {
+    "track_id": 162,
+    "first_timestamp": 3.833,
+    "last_timestamp": 3.867,
+    "sample_bbox_xyxy": [
+      1161.753173828125,
+      349.951416015625,
+      1280.0,
+      452.74066162109375
+    ],
+    "class_counts": {
+      "car": 2
+    },
+    "observed_frames": 2,
+    "first_frame": 115,
+    "last_frame": 116,
+    "mean_confidence": 0.327,
+    "max_confidence": 0.3311
+  },
+  {
+    "track_id": 201,
+    "first_timestamp": 4.667,
+    "last_timestamp": 4.7,
+    "sample_bbox_xyxy": [
+      1054.99853515625,
+      351.9516296386719,
+      1117.5863037109375,
+      416.7882080078125
+    ],
+    "class_counts": {
+      "motorcycle": 2
+    },
+    "observed_frames": 2,
+    "first_frame": 140,
+    "last_frame": 141,
+    "mean_confidence": 0.365,
+    "max_confidence": 0.3945
+  },
+  {
+    "track_id": 238,
+    "first_timestamp": 5.833,
+    "last_timestamp": 5.867,
+    "sample_bbox_xyxy": [
+      924.531982421875,
+      342.03643798828125,
+      985.392333984375,
+      406.2819519042969
+    ],
+    "class_counts": {
+      "motorcycle": 2
+    },
+    "observed_frames": 2,
+    "first_frame": 175,
+    "last_frame": 176,
+    "mean_confidence": 0.53,
+    "max_confidence": 0.5618
+  },
+  {
+    "track_id": 239,
+    "first_timestamp": 5.833,
+    "last_timestamp": 5.867,
+    "sample_bbox_xyxy": [
+      947.0857543945312,
+      320.95208740234375,
+      981.4620971679688,
+      398.02520751953125
+    ],
+    "class_counts": {
+      "rider": 2
+    },
+    "observed_frames": 2,
+    "first_frame": 175,
+    "last_frame": 176,
+    "mean_confidence": 0.4168,
+    "max_confidence": 0.4193
+  },
+  {
+    "track_id": 256,
+    "first_timestamp": 6.0,
+    "last_timestamp": 6.033,
+    "sample_bbox_xyxy": [
+      130.53273010253906,
+      257.863525390625,
+      295.86822509765625,
+      338.5513610839844
+    ],
+    "class_counts": {
+      "car": 2
+    },
+    "observed_frames": 2,
+    "first_frame": 180,
+    "last_frame": 181,
+    "mean_confidence": 0.3216,
+    "max_confidence": 0.3347
+  },
+  {
+    "track_id": 259,
+    "first_timestamp": 6.067,
+    "last_timestamp": 6.1,
+    "sample_bbox_xyxy": [
+      854.2631225585938,
+      334.2564697265625,
+      949.12744140625,
+      403.2861633300781
+    ],
+    "class_counts": {
+      "motorcycle": 2
+    },
+    "observed_frames": 2,
+    "first_frame": 182,
+    "last_frame": 183,
+    "mean_confidence": 0.4166,
+    "max_confidence": 0.4197
+  },
+  {
+    "track_id": 295,
+    "first_timestamp": 7.0,
+    "last_timestamp": 7.033,
+    "sample_bbox_xyxy": [
+      693.3185424804688,
+      302.0688781738281,
+      744.1082153320312,
+      387.8489074707031
+    ],
+    "class_counts": {
+      "rider": 2
+    },
+    "observed_frames": 2,
+    "first_frame": 210,
+    "last_frame": 211,
+    "mean_confidence": 0.3325,
+    "max_confidence": 0.3387
+  },
+  {
+    "track_id": 310,
+    "first_timestamp": 7.333,
+    "last_timestamp": 7.367,
+    "sample_bbox_xyxy": [
+      643.0387573242188,
+      301.79132080078125,
+      680.0570068359375,
+      379.35858154296875
+    ],
+    "class_counts": {
+      "rider": 2
+    },
+    "observed_frames": 2,
+    "first_frame": 220,
+    "last_frame": 221,
+    "mean_confidence": 0.3412,
+    "max_confidence": 0.3424
+  },
+  {
+    "track_id": 323,
+    "first_timestamp": 7.6,
+    "last_timestamp": 7.633,
+    "sample_bbox_xyxy": [
+      0.7823668122291565,
+      426.44085693359375,
+      151.68511962890625,
+      716.515869140625
+    ],
+    "class_counts": {
+      "car": 2
+    },
+    "observed_frames": 2,
+    "first_frame": 228,
+    "last_frame": 229,
+    "mean_confidence": 0.6111,
+    "max_confidence": 0.7425
+  },
+  {
+    "track_id": 330,
+    "first_timestamp": 7.667,
+    "last_timestamp": 7.7,
+    "sample_bbox_xyxy": [
+      601.5409545898438,
+      297.26953125,
+      795.98046875,
+      380.0842590332031
+    ],
+    "class_counts": {
+      "car": 2
+    },
+    "observed_frames": 2,
+    "first_frame": 230,
+    "last_frame": 231,
+    "mean_confidence": 0.4242,
+    "max_confidence": 0.4355
+  },
+  {
+    "track_id": 371,
+    "first_timestamp": 8.267,
+    "last_timestamp": 8.3,
+    "sample_bbox_xyxy": [
+      408.3359375,
+      288.4654846191406,
+      445.44317626953125,
+      372.8803405761719
+    ],
+    "class_counts": {
+      "rider": 2
+    },
+    "observed_frames": 2,
+    "first_frame": 248,
+    "last_frame": 249,
+    "mean_confidence": 0.3643,
+    "max_confidence": 0.4036
+  },
+  {
+    "track_id": 42,
+    "first_timestamp": 1.233,
+    "last_timestamp": 1.233,
+    "sample_bbox_xyxy": [
+      1099.0169677734375,
+      322.69244384765625,
+      1230.8887939453125,
+      409.9920959472656
+    ],
+    "class_counts": {
+      "car": 1
+    },
+    "observed_frames": 1,
+    "first_frame": 37,
+    "last_frame": 37,
+    "mean_confidence": 0.3522,
+    "max_confidence": 0.3522
+  },
+  {
+    "track_id": 68,
+    "first_timestamp": 2.433,
+    "last_timestamp": 2.433,
+    "sample_bbox_xyxy": [
+      658.572509765625,
+      318.5086364746094,
+      732.33349609375,
+      366.86663818359375
+    ],
+    "class_counts": {
+      "motorcycle": 1
+    },
+    "observed_frames": 1,
+    "first_frame": 73,
+    "last_frame": 73,
+    "mean_confidence": 0.3217,
+    "max_confidence": 0.3217
+  },
+  {
+    "track_id": 76,
+    "first_timestamp": 2.633,
+    "last_timestamp": 2.633,
+    "sample_bbox_xyxy": [
+      278.1332702636719,
+      288.39703369140625,
+      363.78765869140625,
+      351.65985107421875
+    ],
+    "class_counts": {
+      "car": 1
+    },
+    "observed_frames": 1,
+    "first_frame": 79,
+    "last_frame": 79,
+    "mean_confidence": 0.3314,
+    "max_confidence": 0.3314
+  },
+  {
+    "track_id": 81,
+    "first_timestamp": 2.7,
+    "last_timestamp": 2.7,
+    "sample_bbox_xyxy": [
+      1219.8282470703125,
+      352.17120361328125,
+      1258.317626953125,
+      429.7813415527344
+    ],
+    "class_counts": {
+      "rider": 1
+    },
+    "observed_frames": 1,
+    "first_frame": 81,
+    "last_frame": 81,
+    "mean_confidence": 0.4086,
+    "max_confidence": 0.4086
+  },
+  {
+    "track_id": 82,
+    "first_timestamp": 2.7,
+    "last_timestamp": 2.7,
+    "sample_bbox_xyxy": [
+      1217.476318359375,
+      372.7002258300781,
+      1259.3665771484375,
+      432.980224609375
+    ],
+    "class_counts": {
+      "motorcycle": 1
+    },
+    "observed_frames": 1,
+    "first_frame": 81,
+    "last_frame": 81,
+    "mean_confidence": 0.3554,
+    "max_confidence": 0.3554
+  },
+  {
+    "track_id": 96,
+    "first_timestamp": 2.8,
+    "last_timestamp": 2.8,
+    "sample_bbox_xyxy": [
+      177.42909240722656,
+      273.54681396484375,
+      237.84634399414062,
+      344.25762939453125
+    ],
+    "class_counts": {
+      "car": 1
+    },
+    "observed_frames": 1,
+    "first_frame": 84,
+    "last_frame": 84,
+    "mean_confidence": 0.34,
+    "max_confidence": 0.34
+  },
+  {
+    "track_id": 111,
+    "first_timestamp": 3.1,
+    "last_timestamp": 3.1,
+    "sample_bbox_xyxy": [
+      146.1419677734375,
+      248.90591430664062,
+      318.0072326660156,
+      337.4320373535156
+    ],
+    "class_counts": {
+      "car": 1
+    },
+    "observed_frames": 1,
+    "first_frame": 93,
+    "last_frame": 93,
+    "mean_confidence": 0.3319,
+    "max_confidence": 0.3319
+  },
+  {
+    "track_id": 144,
+    "first_timestamp": 3.6,
+    "last_timestamp": 3.6,
+    "sample_bbox_xyxy": [
+      1159.3388671875,
+      343.0669860839844,
+      1188.5162353515625,
+      414.1813049316406
+    ],
+    "class_counts": {
+      "rider": 1
+    },
+    "observed_frames": 1,
+    "first_frame": 108,
+    "last_frame": 108,
+    "mean_confidence": 0.3424,
+    "max_confidence": 0.3424
+  },
+  {
+    "track_id": 156,
+    "first_timestamp": 3.767,
+    "last_timestamp": 3.767,
+    "sample_bbox_xyxy": [
+      1146.9151611328125,
+      341.6306457519531,
+      1176.5230712890625,
+      410.5782775878906
+    ],
+    "class_counts": {
+      "rider": 1
+    },
+    "observed_frames": 1,
+    "first_frame": 113,
+    "last_frame": 113,
+    "mean_confidence": 0.3388,
+    "max_confidence": 0.3388
+  },
+  {
+    "track_id": 157,
+    "first_timestamp": 3.767,
+    "last_timestamp": 3.767,
+    "sample_bbox_xyxy": [
+      913.90966796875,
+      309.02734375,
+      1000.7484741210938,
+      344.344482421875
+    ],
+    "class_counts": {
+      "car": 1
+    },
+    "observed_frames": 1,
+    "first_frame": 113,
+    "last_frame": 113,
+    "mean_confidence": 0.3109,
+    "max_confidence": 0.3109
+  },
+  {
+    "track_id": 185,
+    "first_timestamp": 4.267,
+    "last_timestamp": 4.267,
+    "sample_bbox_xyxy": [
+      1262.500732421875,
+      374.0422058105469,
+      1279.6009521484375,
+      471.3329162597656
+    ],
+    "class_counts": {
+      "car": 1
+    },
+    "observed_frames": 1,
+    "first_frame": 128,
+    "last_frame": 128,
+    "mean_confidence": 0.3975,
+    "max_confidence": 0.3975
+  },
+  {
+    "track_id": 196,
+    "first_timestamp": 4.6,
+    "last_timestamp": 4.6,
+    "sample_bbox_xyxy": [
+      1057.83154296875,
+      332.8859558105469,
+      1089.8564453125,
+      405.9002380371094
+    ],
+    "class_counts": {
+      "rider": 1
+    },
+    "observed_frames": 1,
+    "first_frame": 138,
+    "last_frame": 138,
+    "mean_confidence": 0.3088,
+    "max_confidence": 0.3088
+  },
+  {
+    "track_id": 206,
+    "first_timestamp": 4.7,
+    "last_timestamp": 4.7,
+    "sample_bbox_xyxy": [
+      558.7703857421875,
+      2.045231580734253,
+      584.1060180664062,
+      52.205936431884766
+    ],
+    "class_counts": {
+      "traffic sign": 1
+    },
+    "observed_frames": 1,
+    "first_frame": 141,
+    "last_frame": 141,
+    "mean_confidence": 0.3054,
+    "max_confidence": 0.3054
+  },
+  {
+    "track_id": 209,
+    "first_timestamp": 4.767,
+    "last_timestamp": 4.767,
+    "sample_bbox_xyxy": [
+      1023.9620361328125,
+      311.6234436035156,
+      1066.9520263671875,
+      409.6996154785156
+    ],
+    "class_counts": {
+      "rider": 1
+    },
+    "observed_frames": 1,
+    "first_frame": 143,
+    "last_frame": 143,
+    "mean_confidence": 0.3673,
+    "max_confidence": 0.3673
+  },
+  {
+    "track_id": 228,
+    "first_timestamp": 5.433,
+    "last_timestamp": 5.433,
+    "sample_bbox_xyxy": [
+      975.8129272460938,
+      339.6366882324219,
+      1035.1871337890625,
+      410.2980651855469
+    ],
+    "class_counts": {
+      "motorcycle": 1
+    },
+    "observed_frames": 1,
+    "first_frame": 163,
+    "last_frame": 163,
+    "mean_confidence": 0.3026,
+    "max_confidence": 0.3026
+  },
+  {
+    "track_id": 229,
+    "first_timestamp": 5.433,
+    "last_timestamp": 5.433,
+    "sample_bbox_xyxy": [
+      670.793701171875,
+      196.00067138671875,
+      691.1239624023438,
+      236.6490478515625
+    ],
+    "class_counts": {
+      "person": 1
+    },
+    "observed_frames": 1,
+    "first_frame": 163,
+    "last_frame": 163,
+    "mean_confidence": 0.3075,
+    "max_confidence": 0.3075
+  },
+  {
+    "track_id": 317,
+    "first_timestamp": 7.433,
+    "last_timestamp": 7.433,
+    "sample_bbox_xyxy": [
+      626.7783203125,
+      298.3434753417969,
+      663.296875,
+      376.2192077636719
+    ],
+    "class_counts": {
+      "rider": 1
+    },
+    "observed_frames": 1,
+    "first_frame": 223,
+    "last_frame": 223,
+    "mean_confidence": 0.3098,
+    "max_confidence": 0.3098
+  },
+  {
+    "track_id": 357,
+    "first_timestamp": 8.033,
+    "last_timestamp": 8.033,
+    "sample_bbox_xyxy": [
+      469.6003112792969,
+      292.129638671875,
+      511.8277282714844,
+      368.30389404296875
+    ],
+    "class_counts": {
+      "rider": 1
+    },
+    "observed_frames": 1,
+    "first_frame": 241,
+    "last_frame": 241,
+    "mean_confidence": 0.3041,
+    "max_confidence": 0.3041
+  },
+  {
+    "track_id": 372,
+    "first_timestamp": 8.267,
+    "last_timestamp": 8.267,
+    "sample_bbox_xyxy": [
+      928.6015014648438,
+      328.1326904296875,
+      1025.2454833984375,
+      387.712890625
+    ],
+    "class_counts": {
+      "car": 1
+    },
+    "observed_frames": 1,
+    "first_frame": 248,
+    "last_frame": 248,
+    "mean_confidence": 0.3359,
+    "max_confidence": 0.3359
+  }
+]

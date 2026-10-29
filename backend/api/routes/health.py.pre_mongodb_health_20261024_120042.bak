@@ -1,0 +1,19 @@
+from fastapi import APIRouter
+from pathlib import Path
+
+from backend.core.config import settings
+
+router = APIRouter(tags=["Health"])
+
+
+@router.get("/health")
+def health():
+    model_path = Path(settings.model_path)
+    evidence_path = Path(settings.evidence_dir)
+    return {
+        "status": "ok",
+        "application": settings.app_name,
+        "version": settings.app_version,
+        "model_available": model_path.is_file(),
+        "evidence_directory_available": evidence_path.is_dir(),
+    }

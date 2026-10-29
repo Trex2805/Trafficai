@@ -1,0 +1,90 @@
+from datetime import datetime, timezone
+from pathlib import Path
+from threading import Lock
+from uuid import uuid4
+
+from fastapi import BackgroundTasks
+
+from backend.services.inference_service import run_video_inference
+from backend.services.event_processing import save_processed_events
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+JOB_ROOT = PROJECT_ROOT / "storage" / "evidence" / "jobs"
+
+_jobs: dict[str, dict] = {}
+_lock = Lock()
+
+
+def utc_now():
+    return datetime.now(timezone.utc).isoformat()
+
+
+def create_job(filename: str) -> dict:
+    job_id = uuid4().hex
+    job_dir = JOB_ROOT / job_id
+    job_dir.mkdir(parents=True, exist_ok=False)
+
+    record = {
+        "job_id": job_id,
+        "filename": filename,
+        "status": "queued",
+        "progress": 0,
+        "created_at": utc_now(),
+        "updated_at": utc_now(),
+        "error": None,
+        "result": None,
+        "job_dir": str(job_dir),
+    }
+
+    with _lock:
+        _jobs[job_id] = record
+
+    return record.copy()
+
+
+def get_job(job_id: str) -> dict | None:
+    with _lock:
+        record = _jobs.get(job_id)
+        return record.copy() if record else None
+
+
+def update_job(job_id: str, **fields):
+    with _lock:
+        if job_id in _jobs:
+            _jobs[job_id].update(fields, updated_at=utc_now())
+
+
+def process_job(job_id: str, input_path: str):
+    path = Path(input_path)
+
+    try:
+        update_job(job_id, status="processing", progress=5)
+        result = run_video_inference(path)
+
+        # Process detections before marking the job completed.
+        detection_log = Path(result["detection_log"])
+        analysis_dir = detection_log.parent / "event_processing"
+        analysis = save_processed_events(detection_log, analysis_dir)
+
+        result["analysis"] = {
+            "directory": str(analysis_dir),
+            "report": str(analysis_dir / "processing_report.json"),
+            "tracks": str(analysis_dir / "track_summaries.json"),
+            "candidate_events": str(analysis_dir / "candidate_events.json"),
+            "summary": analysis,
+        }
+
+        update_job(
+            job_id,
+            status="completed",
+            progress=100,
+            result=result,
+        )
+    except Exception as exc:
+        update_job(
+            job_id,
+            status="failed",
+            error=f"{type(exc).__name__}: {exc}",
+        )
+    finally:
+        path.unlink(missing_ok=True)

@@ -1,0 +1,139 @@
+[
+  {
+    "track_id": 2,
+    "first_timestamp": 0.0,
+    "last_timestamp": 1.6,
+    "sample_bbox_xyxy": [
+      284.15130615234375,
+      394.0166015625,
+      859.1644897460938,
+      747.7608642578125
+    ],
+    "class_counts": {
+      "bus": 1,
+      "car": 3
+    },
+    "observed_frames": 4,
+    "first_frame": 0,
+    "last_frame": 8,
+    "mean_confidence": 0.9037,
+    "max_confidence": 0.9442
+  },
+  {
+    "track_id": 3,
+    "first_timestamp": 0.0,
+    "last_timestamp": 2.4,
+    "sample_bbox_xyxy": [
+      7.825064182281494,
+      324.92529296875,
+      575.93359375,
+      504.6878662109375
+    ],
+    "class_counts": {
+      "bus": 1,
+      "truck": 1,
+      "car": 1
+    },
+    "observed_frames": 3,
+    "first_frame": 0,
+    "last_frame": 12,
+    "mean_confidence": 0.5763,
+    "max_confidence": 0.7345
+  },
+  {
+    "track_id": 56,
+    "first_timestamp": 1.6,
+    "last_timestamp": 2.4,
+    "sample_bbox_xyxy": [
+      950.9229736328125,
+      445.6842041015625,
+      1059.27587890625,
+      594.8534545898438
+    ],
+    "class_counts": {
+      "autorickshaw": 2,
+      "car": 1
+    },
+    "observed_frames": 3,
+    "first_frame": 8,
+    "last_frame": 12,
+    "mean_confidence": 0.8794,
+    "max_confidence": 0.9098
+  },
+  {
+    "track_id": 1,
+    "first_timestamp": 0.0,
+    "last_timestamp": 0.2,
+    "sample_bbox_xyxy": [
+      812.2806396484375,
+      161.63558959960938,
+      1911.9234619140625,
+      921.3023681640625
+    ],
+    "class_counts": {
+      "truck": 2
+    },
+    "observed_frames": 2,
+    "first_frame": 0,
+    "last_frame": 1,
+    "mean_confidence": 0.8811,
+    "max_confidence": 0.8841
+  },
+  {
+    "track_id": 4,
+    "first_timestamp": 0.0,
+    "last_timestamp": 0.0,
+    "sample_bbox_xyxy": [
+      845.7457275390625,
+      129.61297607421875,
+      1211.6329345703125,
+      224.55767822265625
+    ],
+    "class_counts": {
+      "traffic sign": 1
+    },
+    "observed_frames": 1,
+    "first_frame": 0,
+    "last_frame": 0,
+    "mean_confidence": 0.2973,
+    "max_confidence": 0.2973
+  },
+  {
+    "track_id": 5,
+    "first_timestamp": 0.0,
+    "last_timestamp": 0.0,
+    "sample_bbox_xyxy": [
+      846.212158203125,
+      128.57769775390625,
+      1205.554443359375,
+      196.84710693359375
+    ],
+    "class_counts": {
+      "traffic sign": 1
+    },
+    "observed_frames": 1,
+    "first_frame": 0,
+    "last_frame": 0,
+    "mean_confidence": 0.2596,
+    "max_confidence": 0.2596
+  },
+  {
+    "track_id": 57,
+    "first_timestamp": 1.6,
+    "last_timestamp": 1.6,
+    "sample_bbox_xyxy": [
+      148.2833251953125,
+      518.1635131835938,
+      250.7722625732422,
+      728.2527465820312
+    ],
+    "class_counts": {
+      "person": 1
+    },
+    "observed_frames": 1,
+    "first_frame": 8,
+    "last_frame": 8,
+    "mean_confidence": 0.6876,
+    "max_confidence": 0.6876
+  }
+]

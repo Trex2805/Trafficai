@@ -1,0 +1,9 @@
+image,crop_type,width,height,prediction,confidence
+frame_125_box_14_full.jpg,full,39,73,with_helmet,0.0265
+frame_125_box_14_upper40.jpg,upper40,39,29,no_detection,
+frame_125_box_16_full.jpg,full,33,77,no_detection,
+frame_125_box_16_upper40.jpg,upper40,33,30,no_detection,
+frame_200_box_10_full.jpg,full,32,76,with_helmet,0.3983
+frame_200_box_10_upper40.jpg,upper40,32,30,no_detection,
+frame_200_box_16_full.jpg,full,26,80,with_helmet,0.0637
+frame_200_box_16_upper40.jpg,upper40,26,32,no_detection,

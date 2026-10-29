@@ -1,0 +1,135 @@
+from pathlib import Path
+import shutil
+
+from fastapi import APIRouter, BackgroundTasks, File, HTTPException, UploadFile
+from fastapi.responses import FileResponse
+
+from backend.services.job_service import (
+    JOB_ROOT,
+    create_job,
+    get_job,
+    process_job,
+)
+
+router = APIRouter(prefix="/inference", tags=["Inference"])
+
+ALLOWED_SUFFIXES = {".mp4", ".avi", ".mov", ".mkv"}
+MAX_UPLOAD_BYTES = 500 * 1024 * 1024
+
+
+@router.post("/video", status_code=202)
+def submit_video(
+    background_tasks: BackgroundTasks,
+    file: UploadFile = File(...),
+):
+    filename = Path(file.filename or "upload.mp4").name
+    suffix = Path(filename).suffix.lower()
+
+    if suffix not in ALLOWED_SUFFIXES:
+        file.file.close()
+        raise HTTPException(
+            status_code=400,
+            detail="Unsupported video extension. Use MP4, AVI, MOV, or MKV.",
+        )
+
+    job = None
+    input_path = None
+
+    try:
+        job = create_job(filename)
+        input_path = Path(job["job_dir"]) / f"input{suffix}"
+        total = 0
+
+        with input_path.open("wb") as output:
+            while True:
+                chunk = file.file.read(1024 * 1024)
+                if not chunk:
+                    break
+                total += len(chunk)
+                if total > MAX_UPLOAD_BYTES:
+                    raise HTTPException(
+                        status_code=413,
+                        detail="Video exceeds the 500 MiB upload limit.",
+                    )
+                output.write(chunk)
+
+        if total == 0:
+            raise HTTPException(status_code=400, detail="Uploaded video is empty.")
+
+        background_tasks.add_task(
+            process_job, job["job_id"], str(input_path)
+        )
+
+        return {
+            "job_id": job["job_id"],
+            "status": "queued",
+            "status_url": f"/api/v1/inference/jobs/{job['job_id']}",
+        }
+
+    except HTTPException:
+        if input_path:
+            input_path.unlink(missing_ok=True)
+        if job:
+            shutil.rmtree(job["job_dir"], ignore_errors=True)
+        raise
+    except Exception as exc:
+        if input_path:
+            input_path.unlink(missing_ok=True)
+        if job:
+            shutil.rmtree(job["job_dir"], ignore_errors=True)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Could not accept video: {type(exc).__name__}: {exc}",
+        ) from exc
+    finally:
+        file.file.close()
+
+
+@router.get("/jobs/{job_id}")
+def job_status(job_id: str):
+    job = get_job(job_id)
+    if not job:
+        raise HTTPException(
+            status_code=404,
+            detail="Job not found in this server process.",
+        )
+
+    job.pop("job_dir", None)
+    result = job.get("result") or {}
+    job["evidence"] = {
+        "annotated_video": result.get("annotated_video"),
+        "detection_log": result.get("detection_log"),
+    }
+    return job
+
+
+@router.get("/jobs/{job_id}/video")
+def job_video(job_id: str):
+    job = get_job(job_id)
+    if not job:
+        raise HTTPException(status_code=404, detail="Job not found.")
+
+    result = job.get("result") or {}
+    path = Path(result.get("annotated_video", ""))
+    if job["status"] != "completed" or not path.is_file():
+        raise HTTPException(status_code=409, detail="Annotated video is not ready.")
+
+    return FileResponse(path, media_type="video/mp4", filename="annotated.mp4")
+
+
+@router.get("/jobs/{job_id}/events")
+def job_events(job_id: str):
+    job = get_job(job_id)
+    if not job:
+        raise HTTPException(status_code=404, detail="Job not found.")
+
+    result = job.get("result") or {}
+    path = Path(result.get("detection_log", ""))
+    if job["status"] != "completed" or not path.is_file():
+        raise HTTPException(status_code=409, detail="Detection log is not ready.")
+
+    return FileResponse(
+        path,
+        media_type="application/x-ndjson",
+        filename="detections.jsonl",
+    )

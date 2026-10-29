@@ -1,0 +1,97 @@
+from collections import defaultdict
+
+
+def aggregate_helmet_events(events: list[dict]) -> dict:
+    """Group helmet observations by valid track ID; never merge null IDs."""
+    grouped = defaultdict(list)
+    unassociated = []
+
+    for event in events:
+        track_id = event.get("track_id")
+        if track_id is None:
+            unassociated.append(event)
+        else:
+            grouped[str(track_id)].append(event)
+
+    track_summaries = []
+
+    for track_id, observations in grouped.items():
+        observations.sort(
+            key=lambda event: event.get("timestamp_seconds", 0)
+        )
+
+        candidate_events = [
+            event for event in observations
+            if event.get("status") == "without_helmet"
+        ]
+        helmet_events = [
+            event for event in observations
+            if event.get("status") == "with_helmet"
+        ]
+        unknown_events = [
+            event for event in observations
+            if event.get("status") == "no_helmet_detection"
+        ]
+
+        candidate_frames = sorted({
+            event.get("frame_index")
+            for event in candidate_events
+            if event.get("frame_index") is not None
+        })
+
+        best_candidate = max(
+            candidate_events,
+            key=lambda event: event.get("confidence") or 0,
+            default=None,
+        )
+
+        track_summaries.append({
+            "track_id": track_id,
+            "first_timestamp": observations[0].get("timestamp_seconds"),
+            "last_timestamp": observations[-1].get("timestamp_seconds"),
+            "observations": len(observations),
+            "without_helmet_observations": len(candidate_events),
+            "with_helmet_observations": len(helmet_events),
+            "no_helmet_detection_observations": len(unknown_events),
+            "candidate_frames": candidate_frames,
+            "candidate_frame_count": len(candidate_frames),
+            "review_status": (
+                "review_candidate" if candidate_events else "no_candidate_observed"
+            ),
+            "best_candidate": best_candidate,
+        })
+
+    track_summaries.sort(
+        key=lambda item: (
+            item["candidate_frame_count"],
+            item["observations"],
+        ),
+        reverse=True,
+    )
+
+    # Null-ID observations remain separate. They are not treated as unique riders.
+    unassociated_candidates = [
+        event for event in unassociated
+        if event.get("status") == "without_helmet"
+    ]
+
+    return {
+        "tracked_rider_summaries": track_summaries,
+        "unassociated_helmet_events": unassociated,
+        "tracked_review_candidate_count": sum(
+            1 for item in track_summaries
+            if item["without_helmet_observations"] > 0
+        ),
+        "unassociated_review_candidate_count": len(unassociated_candidates),
+        "review_case_count": (
+            sum(
+                1 for item in track_summaries
+                if item["without_helmet_observations"] > 0
+            )
+            + len(unassociated_candidates)
+        ),
+        "notice": (
+            "Counts are review cases, not confirmed violations. "
+            "Unassociated observations may refer to the same rider."
+        ),
+    }

@@ -1,0 +1,120 @@
+from __future__ import annotations
+
+import json
+import uuid
+from pathlib import Path
+
+import cv2
+from ultralytics import YOLO
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+DEFAULT_WEIGHTS = (
+    PROJECT_ROOT
+    / "runs/detect/runs/production/idd_speed_benchmark_batch24/weights/best.pt"
+)
+EVIDENCE_ROOT = PROJECT_ROOT / "storage" / "evidence"
+
+
+def run_video_inference(
+    source_path: Path,
+    confidence: float = 0.25,
+    weights_path: Path = DEFAULT_WEIGHTS,
+) -> dict:
+    """Run YOLO tracking on a saved video and write evidence outputs."""
+    source_path = source_path.resolve()
+    weights_path = weights_path.resolve()
+
+    if not source_path.is_file():
+        raise FileNotFoundError("Input video does not exist.")
+    if not weights_path.is_file():
+        raise FileNotFoundError(f"Model checkpoint not found: {weights_path}")
+    if not 0.0 < confidence < 1.0:
+        raise ValueError("Confidence must be between 0 and 1.")
+
+    job_id = uuid.uuid4().hex
+    output_dir = EVIDENCE_ROOT / job_id
+    output_dir.mkdir(parents=True, exist_ok=False)
+
+    video_out = output_dir / "annotated.mp4"
+    events_out = output_dir / "detections.jsonl"
+
+    model = YOLO(str(weights_path))
+    cap = cv2.VideoCapture(str(source_path))
+    if not cap.isOpened():
+        raise ValueError("Could not open the uploaded video.")
+
+    fps = cap.get(cv2.CAP_PROP_FPS)
+    fps = fps if fps > 0 else 25.0
+    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    if width <= 0 or height <= 0:
+        cap.release()
+        raise ValueError("Video has invalid dimensions.")
+
+    writer = cv2.VideoWriter(
+        str(video_out),
+        cv2.VideoWriter_fourcc(*"mp4v"),
+        fps,
+        (width, height),
+    )
+    if not writer.isOpened():
+        cap.release()
+        raise RuntimeError("Could not create the annotated output video.")
+
+    frame_index = 0
+    detection_count = 0
+    try:
+        with events_out.open("w", encoding="utf-8") as log:
+            while True:
+                ok, frame = cap.read()
+                if not ok:
+                    break
+
+                results = model.track(
+                    frame,
+                    persist=True,
+                    tracker="bytetrack.yaml",
+                    conf=confidence,
+                    device=0,
+                    verbose=False,
+                )
+                result = results[0]
+                writer.write(result.plot())
+
+                if result.boxes is not None:
+                    boxes = result.boxes
+                    xyxy = boxes.xyxy.cpu().tolist()
+                    classes = boxes.cls.int().cpu().tolist()
+                    scores = boxes.conf.cpu().tolist()
+                    track_ids = (
+                        boxes.id.int().cpu().tolist()
+                        if boxes.id is not None
+                        else [None] * len(classes)
+                    )
+
+                    for bbox, class_id, score, track_id in zip(
+                        xyxy, classes, scores, track_ids
+                    ):
+                        log.write(json.dumps({
+                            "frame_index": frame_index,
+                            "timestamp_seconds": frame_index / fps,
+                            "class_id": class_id,
+                            "class_name": model.names.get(class_id, str(class_id)),
+                            "confidence": score,
+                            "track_id": track_id,
+                            "bbox_xyxy": bbox,
+                        }) + "\n")
+                        detection_count += 1
+
+                frame_index += 1
+    finally:
+        cap.release()
+        writer.release()
+
+    return {
+        "job_id": job_id,
+        "frames_processed": frame_index,
+        "detections_recorded": detection_count,
+        "annotated_video": str(video_out),
+        "detection_log": str(events_out),
+    }

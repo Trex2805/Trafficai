@@ -1,0 +1,29 @@
+import argparse
+import json
+from pathlib import Path
+
+from backend.services.event_processing import save_processed_events
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Summarize tracked objects and create review candidates."
+    )
+    parser.add_argument("--input", required=True, help="Path to detections.jsonl")
+    parser.add_argument("--output", default=None, help="Output directory")
+    args = parser.parse_args()
+
+    source = Path(args.input)
+    if not source.is_file():
+        raise SystemExit(f"Detection log not found: {source}")
+
+    output = Path(args.output) if args.output else (
+        source.parent / "event_processing"
+    )
+
+    result = save_processed_events(source, output)
+    print(json.dumps(result, indent=2))
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,53 @@
+from __future__ import annotations
+
+
+def associate_plate_to_vehicle(
+    plate_bbox: list[float],
+    vehicle_detections: list[dict],
+) -> dict:
+    """
+    Associate a plate box with a same-frame vehicle detection.
+
+    This is a geometric candidate only, not verified identity.
+    Vehicle detections should contain track_id, class_name, bbox_xyxy.
+    """
+    if not plate_bbox or len(plate_bbox) != 4:
+        return {
+            "vehicle_track_id": None,
+            "association_status": "unassigned",
+        }
+
+    px1, py1, px2, py2 = map(float, plate_bbox)
+    cx = (px1 + px2) / 2
+    cy = (py1 + py2) / 2
+
+    candidates = []
+
+    for vehicle in vehicle_detections:
+        bbox = vehicle.get("bbox_xyxy")
+        track_id = vehicle.get("track_id")
+
+        if not bbox or len(bbox) != 4 or track_id is None:
+            continue
+
+        x1, y1, x2, y2 = map(float, bbox)
+
+        # The plate center must lie inside the vehicle box.
+        if x1 <= cx <= x2 and y1 <= cy <= y2:
+            area = max(0.0, x2 - x1) * max(0.0, y2 - y1)
+            candidates.append((area, vehicle))
+
+    if not candidates:
+        return {
+            "vehicle_track_id": None,
+            "association_status": "unassigned",
+        }
+
+    # Prefer the smallest enclosing vehicle box when boxes overlap.
+    _, best = min(candidates, key=lambda item: item[0])
+
+    return {
+        "vehicle_track_id": best["track_id"],
+        "vehicle_class": best.get("class_name", "unknown"),
+        "association_status": "geometry_candidate",
+    }

@@ -1,0 +1,576 @@
+[
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 10,
+    "first_timestamp": 0.0,
+    "last_timestamp": 0.233,
+    "observed_frames": 8,
+    "observed_classes": [
+      "motorcycle"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 68,
+    "first_timestamp": 2.433,
+    "last_timestamp": 2.433,
+    "observed_frames": 1,
+    "observed_classes": [
+      "motorcycle"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 81,
+    "first_timestamp": 2.7,
+    "last_timestamp": 2.7,
+    "observed_frames": 1,
+    "observed_classes": [
+      "rider"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 82,
+    "first_timestamp": 2.7,
+    "last_timestamp": 2.7,
+    "observed_frames": 1,
+    "observed_classes": [
+      "motorcycle"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 115,
+    "first_timestamp": 3.133,
+    "last_timestamp": 4.7,
+    "observed_frames": 40,
+    "observed_classes": [
+      "motorcycle"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 116,
+    "first_timestamp": 3.167,
+    "last_timestamp": 7.7,
+    "observed_frames": 120,
+    "observed_classes": [
+      "motorcycle"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 132,
+    "first_timestamp": 3.433,
+    "last_timestamp": 4.7,
+    "observed_frames": 9,
+    "observed_classes": [
+      "motorcycle"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 135,
+    "first_timestamp": 3.5,
+    "last_timestamp": 6.933,
+    "observed_frames": 64,
+    "observed_classes": [
+      "motorcycle",
+      "rider"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 143,
+    "first_timestamp": 3.6,
+    "last_timestamp": 3.867,
+    "observed_frames": 4,
+    "observed_classes": [
+      "rider"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 144,
+    "first_timestamp": 3.6,
+    "last_timestamp": 3.6,
+    "observed_frames": 1,
+    "observed_classes": [
+      "rider"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 154,
+    "first_timestamp": 3.767,
+    "last_timestamp": 6.2,
+    "observed_frames": 50,
+    "observed_classes": [
+      "rider"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 156,
+    "first_timestamp": 3.767,
+    "last_timestamp": 3.767,
+    "observed_frames": 1,
+    "observed_classes": [
+      "rider"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 164,
+    "first_timestamp": 3.933,
+    "last_timestamp": 4.6,
+    "observed_frames": 16,
+    "observed_classes": [
+      "rider"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 168,
+    "first_timestamp": 3.967,
+    "last_timestamp": 4.2,
+    "observed_frames": 8,
+    "observed_classes": [
+      "motorcycle"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 178,
+    "first_timestamp": 4.167,
+    "last_timestamp": 4.433,
+    "observed_frames": 4,
+    "observed_classes": [
+      "rider"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 186,
+    "first_timestamp": 4.267,
+    "last_timestamp": 4.7,
+    "observed_frames": 6,
+    "observed_classes": [
+      "rider"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 195,
+    "first_timestamp": 4.6,
+    "last_timestamp": 4.867,
+    "observed_frames": 9,
+    "observed_classes": [
+      "rider"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 196,
+    "first_timestamp": 4.6,
+    "last_timestamp": 4.6,
+    "observed_frames": 1,
+    "observed_classes": [
+      "rider"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 201,
+    "first_timestamp": 4.667,
+    "last_timestamp": 4.7,
+    "observed_frames": 2,
+    "observed_classes": [
+      "motorcycle"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 209,
+    "first_timestamp": 4.767,
+    "last_timestamp": 4.767,
+    "observed_frames": 1,
+    "observed_classes": [
+      "rider"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 228,
+    "first_timestamp": 5.433,
+    "last_timestamp": 5.433,
+    "observed_frames": 1,
+    "observed_classes": [
+      "motorcycle"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 229,
+    "first_timestamp": 5.433,
+    "last_timestamp": 5.433,
+    "observed_frames": 1,
+    "observed_classes": [
+      "person"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 238,
+    "first_timestamp": 5.833,
+    "last_timestamp": 5.867,
+    "observed_frames": 2,
+    "observed_classes": [
+      "motorcycle"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 239,
+    "first_timestamp": 5.833,
+    "last_timestamp": 5.867,
+    "observed_frames": 2,
+    "observed_classes": [
+      "rider"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 240,
+    "first_timestamp": 5.833,
+    "last_timestamp": 5.933,
+    "observed_frames": 4,
+    "observed_classes": [
+      "rider"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 245,
+    "first_timestamp": 5.867,
+    "last_timestamp": 6.767,
+    "observed_frames": 22,
+    "observed_classes": [
+      "rider"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 251,
+    "first_timestamp": 5.933,
+    "last_timestamp": 6.767,
+    "observed_frames": 13,
+    "observed_classes": [
+      "motorcycle"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 259,
+    "first_timestamp": 6.067,
+    "last_timestamp": 6.1,
+    "observed_frames": 2,
+    "observed_classes": [
+      "motorcycle"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 263,
+    "first_timestamp": 6.2,
+    "last_timestamp": 7.6,
+    "observed_frames": 30,
+    "observed_classes": [
+      "motorcycle",
+      "rider"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 281,
+    "first_timestamp": 6.6,
+    "last_timestamp": 6.667,
+    "observed_frames": 3,
+    "observed_classes": [
+      "rider"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 282,
+    "first_timestamp": 6.667,
+    "last_timestamp": 6.833,
+    "observed_frames": 6,
+    "observed_classes": [
+      "motorcycle"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 295,
+    "first_timestamp": 7.0,
+    "last_timestamp": 7.033,
+    "observed_frames": 2,
+    "observed_classes": [
+      "rider"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 298,
+    "first_timestamp": 7.067,
+    "last_timestamp": 8.3,
+    "observed_frames": 23,
+    "observed_classes": [
+      "person"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 300,
+    "first_timestamp": 7.1,
+    "last_timestamp": 7.2,
+    "observed_frames": 4,
+    "observed_classes": [
+      "motorcycle"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 310,
+    "first_timestamp": 7.333,
+    "last_timestamp": 7.367,
+    "observed_frames": 2,
+    "observed_classes": [
+      "rider"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 317,
+    "first_timestamp": 7.433,
+    "last_timestamp": 7.433,
+    "observed_frames": 1,
+    "observed_classes": [
+      "rider"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 325,
+    "first_timestamp": 7.6,
+    "last_timestamp": 8.3,
+    "observed_frames": 22,
+    "observed_classes": [
+      "motorcycle"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 328,
+    "first_timestamp": 7.633,
+    "last_timestamp": 7.7,
+    "observed_frames": 3,
+    "observed_classes": [
+      "motorcycle"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 339,
+    "first_timestamp": 7.833,
+    "last_timestamp": 8.3,
+    "observed_frames": 13,
+    "observed_classes": [
+      "motorcycle"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 340,
+    "first_timestamp": 7.833,
+    "last_timestamp": 7.9,
+    "observed_frames": 3,
+    "observed_classes": [
+      "motorcycle"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 351,
+    "first_timestamp": 7.967,
+    "last_timestamp": 8.3,
+    "observed_frames": 11,
+    "observed_classes": [
+      "motorcycle"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 357,
+    "first_timestamp": 8.033,
+    "last_timestamp": 8.033,
+    "observed_frames": 1,
+    "observed_classes": [
+      "rider"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 366,
+    "first_timestamp": 8.167,
+    "last_timestamp": 8.267,
+    "observed_frames": 4,
+    "observed_classes": [
+      "rider"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  },
+  {
+    "event_type": "traffic_review_candidate",
+    "reason": "Tracked rider/person/motorcycle requires review",
+    "track_id": 371,
+    "first_timestamp": 8.267,
+    "last_timestamp": 8.3,
+    "observed_frames": 2,
+    "observed_classes": [
+      "rider"
+    ],
+    "review_status": "pending",
+    "is_confirmed_violation": false
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "source_log": "/home/itm/TrafficAI/storage/evidence/6527b4da89fb47589c95c5ef6871e5a2/detections.jsonl",
+  "records_processed": 4031,
+  "unique_tracks": 115,
+  "class_counts": {
+    "car": 3184,
+    "traffic sign": 255,
+    "motorcycle": 285,
+    "rider": 165,
+    "traffic light": 105,
+    "autorickshaw": 13,
+    "person": 24
+  },
+  "notice": "Review candidates are not confirmed violations. Human verification and violation-specific evidence are required."
+}

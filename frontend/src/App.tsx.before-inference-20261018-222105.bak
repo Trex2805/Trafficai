@@ -1,0 +1,268 @@
+import { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import {
+  BarChart3,
+  Cpu,
+  TrendingUp,
+  Database,
+  ActivitySquare,
+  Settings,
+  Navigation,
+  Camera,
+  AlertCircle,
+  DollarSign,
+  LineChart,
+  Map,
+} from 'lucide-react';
+
+import './index.css';
+import { Layout } from './components/layout/Layout';
+import { LoginPage } from './pages/auth/LoginPage';
+import { DeveloperOverview } from './pages/developer/DeveloperOverview';
+import { ModelsAndPerformance } from './pages/developer/ModelsAndPerformance';
+import { ContinualLearning } from './pages/developer/ContinualLearning';
+import { DataIntelligence } from './pages/developer/DataIntelligence';
+import { SystemLogs } from './pages/developer/SystemLogs';
+import { SystemSettings } from './pages/developer/SystemSettings';
+import { TrafficOverview } from './pages/authority/TrafficOverview';
+import { CameraSurveillance } from './pages/authority/CameraSurveillance';
+import { ViolationsAndReviews } from './pages/authority/ViolationsAndReviews';
+import { FineIntelligence } from './pages/authority/FineIntelligence';
+import { TrafficAnalytics } from './pages/authority/TrafficAnalytics';
+import { TrafficMap } from './pages/TrafficMap';
+
+import { User, UserRole } from './types';
+
+export default function App() {
+  const [user, setUser] = useState<User | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // Check for stored user on mount
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      try {
+        const userData = JSON.parse(storedUser);
+        setUser(userData);
+        setIsAuthenticated(true);
+      } catch (error) {
+        console.error('Error parsing stored user:', error);
+        localStorage.removeItem('user');
+      }
+    }
+  }, []);
+
+  const handleLogin = (email: string, role: UserRole) => {
+    const userData: User = {
+      id: `user_${Date.now()}`,
+      email,
+      role,
+      name: email.split('@')[0],
+    };
+    setUser(userData);
+    setIsAuthenticated(true);
+    localStorage.setItem('user', JSON.stringify(userData));
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    setIsAuthenticated(false);
+    localStorage.removeItem('user');
+  };
+
+  const handleSearch = (query: string) => {
+    console.log('Searching for:', query);
+    // Implement search functionality later
+  };
+
+  // Developer Navigation Items
+  const developerNavItems = [
+    {
+      label: 'Overview',
+      path: '/developer/dashboard',
+      icon: <BarChart3 size={20} />,
+    },
+    {
+      label: 'Traffic Map',
+      path: '/traffic-map',
+      icon: <Map size={20} />,
+    },
+    {
+      label: 'Models & Performance',
+      path: '/developer/models',
+      icon: <Cpu size={20} />,
+    },
+    {
+      label: 'Continual Learning',
+      path: '/developer/learning',
+      icon: <TrendingUp size={20} />,
+    },
+    {
+      label: 'Data Intelligence',
+      path: '/developer/data',
+      icon: <Database size={20} />,
+    },
+    {
+      label: 'System Logs',
+      path: '/developer/logs',
+      icon: <ActivitySquare size={20} />,
+    },
+    {
+      label: 'Settings',
+      path: '/developer/settings',
+      icon: <Settings size={20} />,
+    },
+  ];
+
+  // Authority Navigation Items
+  const authorityNavItems = [
+    {
+      label: 'Traffic Overview',
+      path: '/authority/dashboard',
+      icon: <Navigation size={20} />,
+    },
+    {
+      label: 'Traffic Map',
+      path: '/traffic-map',
+      icon: <Map size={20} />,
+    },
+    {
+      label: 'Camera Surveillance',
+      path: '/authority/cameras',
+      icon: <Camera size={20} />,
+    },
+    {
+      label: 'Violations & Reviews',
+      path: '/authority/violations',
+      icon: <AlertCircle size={20} />,
+    },
+    {
+      label: 'Fine Intelligence',
+      path: '/authority/fines',
+      icon: <DollarSign size={20} />,
+    },
+    {
+      label: 'Traffic Analytics',
+      path: '/authority/analytics',
+      icon: <LineChart size={20} />,
+    },
+  ];
+
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* Login Route */}
+        <Route
+          path="/login"
+          element={
+            !isAuthenticated ? (
+              <LoginPage onLogin={handleLogin} />
+            ) : (
+              <Navigate
+                to={user?.role === 'developer' ? '/developer/dashboard' : '/authority/dashboard'}
+              />
+            )
+          }
+        />
+
+        {/* Root redirect */}
+        <Route
+          path="/"
+          element={
+            isAuthenticated ? (
+              <Navigate
+                to={
+                  user?.role === 'developer'
+                    ? '/developer/dashboard'
+                    : '/authority/dashboard'
+                }
+              />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+
+        {/* Shared Traffic Map Route */}
+        <Route
+          path="/traffic-map"
+          element={
+            isAuthenticated && user ? (
+              <Layout
+                user={user}
+                onLogout={handleLogout}
+                navItems={
+                  user?.role === 'developer' ? developerNavItems : authorityNavItems
+                }
+                pageTitle="Traffic Surveillance Map"
+                onSearch={handleSearch}
+              >
+                <TrafficMap />
+              </Layout>
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+
+        {/* Developer Routes */}
+        <Route
+          path="/developer/*"
+          element={
+            isAuthenticated && user?.role === 'developer' ? (
+              <Layout
+                user={user}
+                onLogout={handleLogout}
+                navItems={developerNavItems}
+                pageTitle="Developer Control Center"
+                onSearch={handleSearch}
+              >
+                <Routes>
+                  <Route path="/dashboard" element={<DeveloperOverview />} />
+                  <Route path="/models" element={<ModelsAndPerformance />} />
+                  <Route path="/learning" element={<ContinualLearning />} />
+                  <Route path="/data" element={<DataIntelligence />} />
+                  <Route path="/logs" element={<SystemLogs />} />
+                  <Route path="/settings" element={<SystemSettings />} />
+                  <Route path="*" element={<Navigate to="/developer/dashboard" />} />
+                </Routes>
+              </Layout>
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+
+        {/* Authority Routes */}
+        <Route
+          path="/authority/*"
+          element={
+            isAuthenticated && user?.role === 'authority' ? (
+              <Layout
+                user={user}
+                onLogout={handleLogout}
+                navItems={authorityNavItems}
+                pageTitle="Traffic Intelligence Dashboard"
+                onSearch={handleSearch}
+              >
+                <Routes>
+                  <Route path="/dashboard" element={<TrafficOverview />} />
+                  <Route path="/cameras" element={<CameraSurveillance />} />
+                  <Route path="/violations" element={<ViolationsAndReviews />} />
+                  <Route path="/fines" element={<FineIntelligence />} />
+                  <Route path="/analytics" element={<TrafficAnalytics />} />
+                  <Route path="*" element={<Navigate to="/authority/dashboard" />} />
+                </Routes>
+              </Layout>
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+
+        {/* Catch all */}
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
