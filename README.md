@@ -107,7 +107,18 @@ npm run
 
 The final command lists available npm scripts. Start the app with the script defined in `frontend/package.json`, commonly `npm run dev`.
 
-### 6. Models and datasets
+### 6. Start everything with one command
+
+From the project root, after installing the Python and frontend dependencies, run:
+
+```bash
+python app.py
+```
+
+This starts the FastAPI backend at `http://127.0.0.1:8000` and the Vite frontend at
+`http://127.0.0.1:5173`. Press `Ctrl+C` once to stop both services.
+
+### 7. Models and datasets
 
 Model inference will not be fully functional until the separately maintained model weights and any required datasets/configuration are available on the machine. Use only approved dataset copies and model artifacts. Do not commit large weights or training outputs to this source repository.
 

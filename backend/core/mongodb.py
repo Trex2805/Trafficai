@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 from threading import Lock
 
+import certifi
 from dotenv import load_dotenv
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
@@ -26,6 +27,7 @@ if not MONGODB_URI:
 client = MongoClient(
     MONGODB_URI,
     server_api=ServerApi("1"),
+    tlsCAFile=certifi.where(),
     serverSelectionTimeoutMS=10000,
 )
 

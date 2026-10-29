@@ -15,7 +15,7 @@ from bson import ObjectId
 from fastapi import APIRouter, Depends, Header, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from pydantic import BaseModel, Field
-from pymongo.errors import DuplicateKeyError
+from pymongo.errors import DuplicateKeyError, PyMongoError
 from pymongo import ReturnDocument
 from pwdlib import PasswordHash
 
@@ -48,7 +48,6 @@ class RegisterRequest(BaseModel):
     email: str = Field(min_length=5, max_length=254)
     password: str = Field(min_length=12, max_length=128)
     requested_role: Literal["user", "authority", "developer"] = "user"
-    invitation_token: str | None = Field(default=None, min_length=32, max_length=256)
 
 
 class ForgotPasswordRequest(BaseModel):
@@ -301,28 +300,7 @@ def register(request: RegisterRequest):
     if len(name) < 2:
         raise HTTPException(status_code=422, detail="Enter your full name.")
 
-    # Developer registration is invitation-only. Authority accounts remain pending
-    # until an administrator verifies eligibility and approves the request.
-    invitation = None
-    if request.requested_role == "developer":
-        if not request.invitation_token:
-            raise HTTPException(status_code=403, detail="A valid developer invitation is required.")
-        now = datetime.now(timezone.utc)
-        invitation = invitations.find_one_and_update(
-            {
-                "token_hash": token_digest(request.invitation_token),
-                "consumed_at": None,
-                "revoked_at": {"$exists": False},
-                "expires_at": {"$gt": now},
-            },
-            {"$set": {"consumed_at": now, "consumed_by_email": email}},
-            return_document=ReturnDocument.BEFORE,
-        )
-        if not invitation:
-            raise HTTPException(status_code=403, detail="Developer invitation is invalid, expired, or already used.")
-
-    # A valid one-time invitation authorizes developer access immediately.
-    # Authority accounts remain standard-role and pending until approval.
+    # Authority accounts remain pending until an administrator verifies eligibility.
     is_developer = request.requested_role == "developer"
     is_authority = request.requested_role == "authority"
     user = {
@@ -339,24 +317,15 @@ def register(request: RegisterRequest):
         users.create_index("email", unique=True, name="uq_users_email")
         result = users.insert_one(user)
     except DuplicateKeyError:
-        # If account creation fails because the email already exists, return
-        # this invitation to the unused state. Match the exact claim made by
-        # this request so we cannot undo another request's consumption.
-        if invitation is not None:
-            invitations.update_one(
-                {
-                    "token_hash": token_digest(request.invitation_token or ""),
-                    "consumed_at": now,
-                    "consumed_by_email": email,
-                },
-                {
-                    "$set": {"consumed_at": None},
-                    "$unset": {"consumed_by_email": ""},
-                },
-            )
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail="An account with this email already exists.",
+        )
+    except PyMongoError:
+        logger.exception("User registration database operation failed.")
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Database connection unavailable. Please try again later.",
         )
 
     user["_id"] = result.inserted_id

@@ -47,7 +47,6 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [invitationToken, setInvitationToken] = useState('');
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
@@ -132,7 +131,6 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
         email: email.trim(),
         password,
         requested_role: selectedRole || 'user',
-        ...(selectedRole === 'developer' ? { invitation_token: invitationToken.trim() } : {}),
       });
 
       setMessage(result.message);
@@ -291,23 +289,6 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                       />
                     </div>
                   </div>
-                  {selectedRole === 'developer' && (
-                    <div>
-                      <label className="block text-sm font-medium text-slate-300 mb-2">
-                        Developer invitation token
-                      </label>
-                      <input
-                        type="password"
-                        required
-                        minLength={32}
-                        autoComplete="off"
-                        value={invitationToken}
-                        onChange={(event) => setInvitationToken(event.target.value)}
-                        placeholder="Paste your one-time invitation token"
-                        className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white"
-                      />
-                    </div>
-                  )}
                   <div>
                     <label className="block text-sm font-medium text-slate-300 mb-2">
                       Password

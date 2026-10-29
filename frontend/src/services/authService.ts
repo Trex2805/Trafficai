@@ -33,6 +33,13 @@ async function readJson<T>(response: Response): Promise<T> {
     const detail =
       typeof body.detail === 'string'
         ? body.detail
+        : Array.isArray(body.detail)
+          ? body.detail
+              .map((item: { msg?: unknown }) =>
+                typeof item?.msg === 'string' ? item.msg : null,
+              )
+              .filter((message: string | null): message is string => message !== null)
+              .join(', ')
         : `Request failed with status ${response.status}`;
 
     throw new Error(detail);
@@ -76,7 +83,6 @@ export async function register(input: {
   email: string;
   password: string;
   requested_role: RequestedRole;
-  invitation_token?: string;
 }): Promise<RegisterResponse> {
   const response = await fetch(`${API_ROOT}/register`, {
     method: 'POST',
