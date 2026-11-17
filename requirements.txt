@@ -1,12 +1,11 @@
 # Dependencies required to run the FastAPI application without ML inference.
 fastapi==0.143.3
-uvicorn[standard]>=0.30
+uvicorn>=0.30
 pydantic>=2.7
 pydantic-settings>=2.2
 python-multipart>=0.0.9
 python-dotenv>=1.0
 certifi>=2024.2.2
 pymongo>=4.6
-numpy>=1.26,<3.0
 pwdlib[argon2]==0.3.1
 PyJWT==2.15.1

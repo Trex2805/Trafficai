@@ -4,7 +4,6 @@ from pathlib import Path
 from threading import Lock
 from uuid import uuid4
 
-import numpy as np
 from bson import BSON
 from bson.errors import InvalidDocument
 from fastapi.encoders import jsonable_encoder
@@ -27,11 +26,13 @@ def _mongo_safe(value):
     if isinstance(value, Path):
         return str(value)
 
-    if isinstance(value, np.ndarray):
-        return _mongo_safe(value.tolist())
+    tolist = getattr(value, "tolist", None)
+    if callable(tolist):
+        return _mongo_safe(tolist())
 
-    if isinstance(value, np.generic):
-        return _mongo_safe(value.item())
+    item = getattr(value, "item", None)
+    if callable(item):
+        return _mongo_safe(item())
 
     if isinstance(value, dict):
         return {str(key): _mongo_safe(item) for key, item in value.items()}

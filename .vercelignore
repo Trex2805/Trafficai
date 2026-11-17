@@ -1,0 +1,26 @@
+# Training outputs, checkpoints, and generated evidence are not needed by the
+# lightweight Vercel API function.
+backups/
+runs/
+storage/
+weights/
+models/
+logs/
+datasets/
+
+# Local archives and model/media artifacts.
+*.pt
+*.pth
+*.onnx
+*.engine
+*.safetensors
+*.ckpt
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.webm
+*.zip
+*.tar
+*.tar.gz
+*.7z
