@@ -122,6 +122,15 @@ This starts the FastAPI backend at `http://127.0.0.1:8000` and the Vite frontend
 
 Model inference will not be fully functional until the separately maintained model weights and any required datasets/configuration are available on the machine. Use only approved dataset copies and model artifacts. Do not commit large weights or training outputs to this source repository.
 
+### 8. Vercel deployment
+
+The repository includes a multi-service `vercel.json` for the Vite frontend and
+FastAPI backend. Vercel uses `requirements-vercel.txt` for the backend service
+so the deployment function stays within Vercel's size limit. Video and
+plate-recognition inference still requires the full local `requirements.txt`
+environment and model weights; those optional dependencies are loaded only when
+an inference job runs.
+
 ## Testing
 
 Once the source and Python dependencies are present, run the relevant tests from the repository root:

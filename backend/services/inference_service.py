@@ -4,9 +4,6 @@ import json
 import uuid
 from pathlib import Path
 
-import cv2
-from ultralytics import YOLO
-
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 DEFAULT_WEIGHTS = (
@@ -31,6 +28,15 @@ def run_video_inference(
     weights_path: Path = DEFAULT_WEIGHTS,
 ) -> dict:
     """Run vehicle tracking and helmet review-candidate inference."""
+    try:
+        import cv2
+        from ultralytics import YOLO
+    except ImportError as exc:
+        raise RuntimeError(
+            "Video inference dependencies are not installed. "
+            "Install requirements.txt before running inference."
+        ) from exc
+
     source_path = Path(source_path).resolve()
     weights_path = Path(weights_path).resolve()
 

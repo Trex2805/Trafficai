@@ -5,11 +5,6 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-import cv2
-import easyocr
-import torch
-from ultralytics import YOLO
-
 from backend.services.plate_association import associate_plate_to_vehicle
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -26,6 +21,17 @@ def run_plate_pipeline(
     frame_stride: int = 5,
 ) -> dict:
     """Detect plate candidates, run OCR, associate tracks, and persist review records."""
+    try:
+        import cv2
+        import easyocr
+        import torch
+        from ultralytics import YOLO
+    except ImportError as exc:
+        raise RuntimeError(
+            "Plate-recognition dependencies are not installed. "
+            "Install requirements.txt before running plate recognition."
+        ) from exc
+
     source_path = Path(source_path).resolve()
     detection_log = Path(detection_log).resolve()
     evidence_dir = Path(evidence_dir).resolve()
