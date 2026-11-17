@@ -1,3 +1,4 @@
+import logging
 from pathlib import Path
 
 from fastapi import APIRouter
@@ -6,6 +7,7 @@ from backend.core.config import settings
 from backend.core.mongodb import test_connection
 
 router = APIRouter(tags=["Health"])
+logger = logging.getLogger(__name__)
 
 
 @router.get("/health")
@@ -19,6 +21,7 @@ def health():
         database_connected = True
     except Exception:
         # Do not expose connection strings or credentials in the API response.
+        logger.exception("MongoDB health check failed.")
         database_connected = False
 
     healthy = (
