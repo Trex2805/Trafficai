@@ -66,7 +66,7 @@ From the repository root:
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
-pip install -r requirements.txt
+pip install -r requirements.txt -r requirements-ml.txt
 ```
 
 On Windows PowerShell, activate with:
@@ -125,11 +125,11 @@ Model inference will not be fully functional until the separately maintained mod
 ### 8. Vercel deployment
 
 The repository includes a multi-service `vercel.json` for the Vite frontend and
-FastAPI backend. Vercel uses `requirements-vercel.txt` for the backend service
-so the deployment function stays within Vercel's size limit. Video and
-plate-recognition inference still requires the full local `requirements.txt`
-environment and model weights; those optional dependencies are loaded only when
-an inference job runs.
+FastAPI backend. Vercel installs the lightweight `requirements.txt` manifest so
+the deployment function stays within Vercel's size limit. Video and
+plate-recognition inference requires the optional `requirements-ml.txt`
+environment and model weights; those dependencies are loaded only when an
+inference job runs.
 
 ## Testing
 
