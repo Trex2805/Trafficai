@@ -16,8 +16,8 @@ load_dotenv(PROJECT_ROOT / ".env")
 if not os.getenv("MONGODB_URI"):
     load_dotenv(PROJECT_ROOT / "MongoDB" / "atlas-credentials.env")
 
-MONGODB_URI = os.getenv("MONGODB_URI")
-DATABASE_NAME = os.getenv("MONGODB_DATABASE", "TrafficAI")
+MONGODB_URI = os.getenv("MONGODB_URI", "").strip()
+DATABASE_NAME = os.getenv("MONGODB_DATABASE", "TrafficAI").strip() or "TrafficAI"
 
 if not MONGODB_URI:
     raise RuntimeError(
