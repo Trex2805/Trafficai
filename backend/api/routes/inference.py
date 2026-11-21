@@ -8,6 +8,7 @@ from pydantic import BaseModel, Field
 from backend.api.routes.auth import require_roles
 from fastapi.responses import FileResponse
 from backend.core.mongodb import video_upload_chunks, video_uploads
+from backend.core.storage import EVIDENCE_ROOT
 
 from backend.services.job_service import (
     JOB_ROOT,
@@ -456,7 +457,7 @@ def get_plate_crop(job_id: str, record_id: str):
     if not record:
         raise HTTPException(status_code=404, detail="Plate record not found.")
 
-    evidence_root = (Path(__file__).resolve().parents[3] / "storage" / "evidence").resolve()
+    evidence_root = EVIDENCE_ROOT.resolve()
     crop_path = Path(record.get("crop_path") or "").resolve()
 
     try:

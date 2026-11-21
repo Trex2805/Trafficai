@@ -4,6 +4,8 @@ import json
 import uuid
 from pathlib import Path
 
+from backend.core.storage import EVIDENCE_ROOT
+
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 DEFAULT_WEIGHTS = (
@@ -14,8 +16,6 @@ HELMET_WEIGHTS = (
     PROJECT_ROOT
     / "runs/detect/runs/helmet/helmet_v6_binary_yolo11n/weights/best.pt"
 )
-EVIDENCE_ROOT = PROJECT_ROOT / "storage" / "evidence"
-
 HELMET_CONF = 0.25
 HELMET_IMGSZ = 640
 HELMET_CROP_PADDING = 0.35

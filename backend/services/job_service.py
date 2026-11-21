@@ -15,7 +15,7 @@ from backend.services.inference_service import run_video_inference
 from backend.services.event_processing import save_processed_events
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-JOB_ROOT = PROJECT_ROOT / "storage" / "evidence" / "jobs"
+from backend.core.storage import JOB_ROOT
 
 
 def utc_now():
