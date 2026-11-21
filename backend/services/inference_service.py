@@ -22,10 +22,75 @@ HELMET_CROP_PADDING = 0.35
 RIDER_CLASS_NAMES = {"rider", "person"}
 
 
+def _convert_to_browser_video(video_path: Path) -> None:
+    """Convert OpenCV output to H.264 MP4 for reliable browser playback."""
+    try:
+        import imageio_ffmpeg
+
+        ffmpeg = imageio_ffmpeg.get_ffmpeg_exe()
+    except ImportError as exc:
+        raise RuntimeError(
+            "Browser-compatible video conversion requires imageio-ffmpeg. "
+            "Install requirements-ml.txt and rerun inference."
+        ) from exc
+
+    converted_path = video_path.with_name(f"{video_path.stem}.browser.mp4")
+    try:
+        import subprocess
+
+        subprocess.run(
+            [
+                ffmpeg,
+                "-y",
+                "-i",
+                str(video_path),
+                "-c:v",
+                "libx264",
+                "-pix_fmt",
+                "yuv420p",
+                "-movflags",
+                "+faststart",
+                "-an",
+                str(converted_path),
+            ],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        converted_path.replace(video_path)
+    except subprocess.CalledProcessError as exc:
+        converted_path.unlink(missing_ok=True)
+        raise RuntimeError(
+            "Could not convert the annotated video to browser-compatible MP4."
+        ) from exc
+
+
+def resolve_inference_device(requested: str | None = None) -> str:
+    """Resolve an explicit device or safely select CPU/GPU at runtime."""
+    try:
+        import torch
+
+        cuda_available = torch.cuda.is_available()
+    except ImportError:
+        cuda_available = False
+
+    if requested:
+        requested = requested.strip().lower()
+        if requested not in {"", "auto"}:
+            if requested in {"cuda", "gpu"}:
+                return "0" if cuda_available else "cpu"
+            return requested
+
+    if cuda_available:
+        return "0"
+    return "cpu"
+
+
 def run_video_inference(
     source_path: Path,
     confidence: float = 0.25,
     weights_path: Path = DEFAULT_WEIGHTS,
+    inference_device: str = "auto",
 ) -> dict:
     """Run vehicle tracking and helmet review-candidate inference."""
     try:
@@ -48,6 +113,7 @@ def run_video_inference(
         raise FileNotFoundError(f"Helmet checkpoint not found: {HELMET_WEIGHTS}")
     if not 0.0 < confidence < 1.0:
         raise ValueError("Confidence must be between 0 and 1.")
+    device = resolve_inference_device(inference_device)
 
     job_id = uuid.uuid4().hex
     output_dir = EVIDENCE_ROOT / job_id
@@ -111,7 +177,7 @@ def run_video_inference(
                     tracker="bytetrack.yaml",
                     imgsz=800,
                     conf=confidence,
-                    device=0,
+                    device=device,
                     verbose=False,
                 )[0]
 
@@ -173,7 +239,7 @@ def run_video_inference(
                             crop,
                             imgsz=HELMET_IMGSZ,
                             conf=HELMET_CONF,
-                            device=0,
+                            device=device,
                             verbose=False,
                         )[0]
 
@@ -242,6 +308,7 @@ def run_video_inference(
                         )
                         cv2.putText(
                             annotated,
+                            f"ID {track_id if track_id is not None else '-'} | "
                             f"{helmet_name} {helmet_score:.2f}",
                             (hx1, max(18, hy1 - 6)),
                             cv2.FONT_HERSHEY_SIMPLEX,
@@ -250,6 +317,18 @@ def run_video_inference(
                             2,
                         )
 
+                cv2.rectangle(annotated, (0, 0), (width, 34), (15, 23, 42), -1)
+                cv2.putText(
+                    annotated,
+                    f"Frame {frame_index} | Detections {len(result.boxes) if result.boxes is not None else 0} | "
+                    f"Review candidates {helmet_review_candidates}",
+                    (12, 23),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    0.6,
+                    (255, 255, 255),
+                    1,
+                    cv2.LINE_AA,
+                )
                 writer.write(annotated)
                 frame_index += 1
 
@@ -263,6 +342,8 @@ def run_video_inference(
     finally:
         cap.release()
         writer.release()
+
+    _convert_to_browser_video(video_out)
 
     return {
         "job_id": job_id,

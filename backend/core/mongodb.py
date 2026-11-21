@@ -38,6 +38,8 @@ vehicles = db["vehicles"]
 violations = db["violations"]
 detections = db["detections"]
 image_embeddings = db["image_embeddings"]
+video_uploads = db["video_uploads"]
+video_upload_chunks = db["video_upload_chunks"]
 
 _index_lock = Lock()
 _index_ready = False

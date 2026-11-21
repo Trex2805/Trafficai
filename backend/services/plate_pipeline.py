@@ -29,7 +29,8 @@ def run_plate_pipeline(
     except ImportError as exc:
         raise RuntimeError(
             "Plate-recognition dependencies are not installed. "
-            "Install requirements.txt before running plate recognition."
+            "Install requirements.txt and requirements-ml.txt before running "
+            "plate recognition."
         ) from exc
 
     source_path = Path(source_path).resolve()

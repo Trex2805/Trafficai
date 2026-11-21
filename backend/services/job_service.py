@@ -10,6 +10,7 @@ from fastapi.encoders import jsonable_encoder
 from pymongo.errors import PyMongoError
 
 from backend.core.mongodb import db, ensure_job_indexes, jobs
+from backend.core.config import settings
 from backend.services.inference_service import run_video_inference
 from backend.services.event_processing import save_processed_events
 
@@ -177,7 +178,10 @@ def process_job(job_id: str, input_path: str):
 
     try:
         update_job(job_id, status="processing", progress=5)
-        result = run_video_inference(path)
+        result = run_video_inference(
+            path,
+            inference_device=settings.inference_device,
+        )
 
         # Optional second pass for number-plate review candidates.
         evidence_dir = Path(result["annotated_video"]).parent

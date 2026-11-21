@@ -1,9 +1,13 @@
 from pathlib import Path
 import shutil
+from math import ceil
+from uuid import uuid4
 
 from fastapi import APIRouter, BackgroundTasks, Depends, File, HTTPException, UploadFile
+from pydantic import BaseModel, Field
 from backend.api.routes.auth import require_roles
 from fastapi.responses import FileResponse
+from backend.core.mongodb import video_upload_chunks, video_uploads
 
 from backend.services.job_service import (
     JOB_ROOT,
@@ -20,6 +24,135 @@ router = APIRouter(
 
 ALLOWED_SUFFIXES = {".mp4", ".avi", ".mov", ".mkv"}
 MAX_UPLOAD_BYTES = 500 * 1024 * 1024
+UPLOAD_CHUNK_BYTES = 3 * 1024 * 1024
+
+
+class VideoUploadInit(BaseModel):
+    filename: str = Field(min_length=1, max_length=255)
+    size: int = Field(gt=0, le=MAX_UPLOAD_BYTES)
+
+
+def _validate_video_filename(filename: str) -> tuple[str, str]:
+    safe_filename = Path(filename).name
+    suffix = Path(safe_filename).suffix.lower()
+    if suffix not in ALLOWED_SUFFIXES:
+        raise HTTPException(
+            status_code=400,
+            detail="Unsupported video extension. Use MP4, AVI, MOV, or MKV.",
+        )
+    return safe_filename, suffix
+
+
+@router.post("/video/uploads", status_code=201)
+def initialize_video_upload(payload: VideoUploadInit):
+    filename, suffix = _validate_video_filename(payload.filename)
+    upload_id = uuid4().hex
+    total_chunks = ceil(payload.size / UPLOAD_CHUNK_BYTES)
+    video_uploads.insert_one(
+        {
+            "upload_id": upload_id,
+            "filename": filename,
+            "suffix": suffix,
+            "size": payload.size,
+            "chunk_size": UPLOAD_CHUNK_BYTES,
+            "total_chunks": total_chunks,
+            "received_chunks": 0,
+            "status": "uploading",
+        }
+    )
+    return {
+        "upload_id": upload_id,
+        "chunk_size": UPLOAD_CHUNK_BYTES,
+        "total_chunks": total_chunks,
+    }
+
+
+@router.put("/video/uploads/{upload_id}/chunks/{chunk_index}", status_code=204)
+def upload_video_chunk(
+    upload_id: str,
+    chunk_index: int,
+    file: UploadFile = File(...),
+):
+    upload = video_uploads.find_one({"upload_id": upload_id}, {"_id": 0})
+    if not upload or upload.get("status") != "uploading":
+        raise HTTPException(status_code=404, detail="Video upload was not found.")
+    if chunk_index < 0 or chunk_index >= upload["total_chunks"]:
+        raise HTTPException(status_code=400, detail="Invalid video chunk number.")
+
+    try:
+        data = file.file.read(UPLOAD_CHUNK_BYTES + 1)
+        expected_size = min(
+            UPLOAD_CHUNK_BYTES,
+            upload["size"] - (chunk_index * UPLOAD_CHUNK_BYTES),
+        )
+        if len(data) != expected_size:
+            raise HTTPException(status_code=400, detail="Video chunk has an invalid size.")
+
+        video_upload_chunks.replace_one(
+            {"upload_id": upload_id, "chunk_index": chunk_index},
+            {"upload_id": upload_id, "chunk_index": chunk_index, "data": data},
+            upsert=True,
+        )
+        received = video_upload_chunks.count_documents({"upload_id": upload_id})
+        video_uploads.update_one(
+            {"upload_id": upload_id},
+            {"$set": {"received_chunks": received}},
+        )
+    finally:
+        file.file.close()
+
+
+@router.post("/video/uploads/{upload_id}/complete", status_code=202)
+def complete_video_upload(upload_id: str, background_tasks: BackgroundTasks):
+    upload = video_uploads.find_one({"upload_id": upload_id}, {"_id": 0})
+    if not upload:
+        raise HTTPException(status_code=404, detail="Video upload was not found.")
+    if upload.get("status") != "uploading":
+        raise HTTPException(status_code=409, detail="Video upload is not active.")
+
+    chunks = list(
+        video_upload_chunks.find(
+            {"upload_id": upload_id},
+            {"_id": 0, "chunk_index": 1, "data": 1},
+        ).sort("chunk_index", 1)
+    )
+    if len(chunks) != upload["total_chunks"]:
+        raise HTTPException(
+            status_code=409,
+            detail=f"Video upload is incomplete ({len(chunks)}/{upload['total_chunks']} chunks).",
+        )
+    if [chunk["chunk_index"] for chunk in chunks] != list(range(upload["total_chunks"])):
+        raise HTTPException(status_code=409, detail="Video upload has missing chunks.")
+
+    job = None
+    input_path = None
+    try:
+        job = create_job(upload["filename"])
+        input_path = Path(job["job_dir"]) / f"input{upload['suffix']}"
+        with input_path.open("wb") as output:
+            for chunk in chunks:
+                output.write(chunk["data"])
+
+        video_uploads.update_one(
+            {"upload_id": upload_id},
+            {"$set": {"status": "completed", "job_id": job["job_id"]}},
+        )
+        video_upload_chunks.delete_many({"upload_id": upload_id})
+        background_tasks.add_task(process_job, job["job_id"], str(input_path))
+        return {
+            "job_id": job["job_id"],
+            "status": "queued",
+            "status_url": f"/api/v1/inference/jobs/{job['job_id']}",
+        }
+    except Exception as exc:
+        if input_path:
+            input_path.unlink(missing_ok=True)
+        if job:
+            shutil.rmtree(job["job_dir"], ignore_errors=True)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Could not assemble video: {type(exc).__name__}: {exc}",
+        ) from exc
 
 
 @router.post("/video", status_code=202)

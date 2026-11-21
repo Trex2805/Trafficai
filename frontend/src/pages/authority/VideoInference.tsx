@@ -5,8 +5,10 @@ import {
   CheckCircle2,
   Clock3,
   FileVideo,
+  FileText,
   Loader2,
   RefreshCw,
+  ShieldCheck,
   Upload,
   Video,
 } from 'lucide-react';
@@ -23,6 +25,17 @@ type Job = {
 };
 
 type ApiError = { detail?: string; message?: string };
+
+type ReviewCase = {
+  case_id: string;
+  frame_index?: number;
+  timestamp_seconds?: number;
+  rider_track_id?: number | null;
+  helmet_status?: string;
+  helmet_confidence?: number | null;
+  candidate_violation?: boolean;
+  evidence_url?: string | null;
+};
 
 import {
   authenticatedFetch,
@@ -49,6 +62,35 @@ function pretty(value: unknown): string {
   return typeof value === 'string' ? value : JSON.stringify(value, null, 2);
 }
 
+function resultNumber(result: Record<string, unknown> | null | undefined, key: string): number {
+  const value = result?.[key];
+  return typeof value === 'number' ? value : 0;
+}
+
+function resultRecord(
+  result: Record<string, unknown> | null | undefined,
+  key: string,
+): Record<string, unknown> | null {
+  const value = result?.[key];
+  return value && typeof value === 'object' && !Array.isArray(value)
+    ? (value as Record<string, unknown>)
+    : null;
+}
+
+function artifactName(value: unknown): string {
+  if (typeof value !== 'string' || !value) return 'Not available';
+  return value.split(/[\\/]/).pop() || value;
+}
+
+function reviewCaseList(value: unknown): ReviewCase[] {
+  if (Array.isArray(value)) return value as ReviewCase[];
+  if (value && typeof value === 'object') {
+    const cases = (value as { review_cases?: unknown }).review_cases;
+    return Array.isArray(cases) ? (cases as ReviewCase[]) : [];
+  }
+  return [];
+}
+
 export default function VideoInference() {
   const [file, setFile] = useState<File | null>(null);
   const [job, setJob] = useState<Job | null>(null);
@@ -58,6 +100,7 @@ export default function VideoInference() {
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
   const [videoObjectUrl, setVideoObjectUrl] = useState('');
+  const [reviewEvidenceUrls, setReviewEvidenceUrls] = useState<Record<string, string>>({});
   const fileInput = useRef<HTMLInputElement>(null);
 
   const active = job?.status === 'queued' || job?.status === 'processing';
@@ -144,11 +187,38 @@ export default function VideoInference() {
     setReviewCases(null);
 
     try {
-      const form = new FormData();
-      form.append('file', file);
+      const upload = await readJson<{
+        upload_id: string;
+        chunk_size: number;
+        total_chunks: number;
+      }>(
+        await authenticatedFetch(`${API}/video/uploads`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ filename: file.name, size: file.size }),
+        }),
+      );
+
+      for (let index = 0; index < upload.total_chunks; index += 1) {
+        const start = index * upload.chunk_size;
+        const chunk = file.slice(start, start + upload.chunk_size);
+        const form = new FormData();
+        form.append('file', chunk, file.name);
+        const chunkResponse = await authenticatedFetch(
+          `${API}/video/uploads/${encodeURIComponent(upload.upload_id)}/chunks/${index}`,
+          { method: 'PUT', body: form },
+        );
+        if (!chunkResponse.ok) {
+          await readJson<unknown>(chunkResponse);
+        }
+        setNotice(`Uploading video: ${index + 1}/${upload.total_chunks} chunks`);
+      }
 
       const created = await readJson<Job>(
-        await authenticatedFetch(`${API}/video`, { method: 'POST', body: form }),
+        await authenticatedFetch(
+          `${API}/video/uploads/${encodeURIComponent(upload.upload_id)}/complete`,
+          { method: 'POST' },
+        ),
       );
 
       setJob(created);
@@ -177,6 +247,10 @@ export default function VideoInference() {
   }
 
   const completed = job?.status === 'completed';
+  const result = job?.result;
+  const platePipeline = resultRecord(result, 'plate_pipeline');
+  const platePipelineFailed = platePipeline?.status === 'failed';
+  const reviewCaseItems = reviewCaseList(reviewCases);
   const videoUrl = job?.job_id
     ? `${API}/jobs/${encodeURIComponent(job.job_id)}/video`
     : '';
@@ -217,6 +291,46 @@ export default function VideoInference() {
       if (objectUrl) URL.revokeObjectURL(objectUrl);
     };
   }, [videoUrl, completed]);
+
+  useEffect(() => {
+    let cancelled = false;
+    const createdUrls: string[] = [];
+
+    setReviewEvidenceUrls({});
+
+    async function loadEvidence() {
+      const entries = await Promise.all(
+        reviewCaseItems
+          .filter((item) => item.evidence_url)
+          .map(async (item) => {
+            try {
+              const url = await fetchAuthenticatedBlobUrl(item.evidence_url!);
+              if (cancelled) {
+                URL.revokeObjectURL(url);
+                return null;
+              }
+              createdUrls.push(url);
+              return [item.case_id, url] as const;
+            } catch {
+              return null;
+            }
+          }),
+      );
+
+      if (!cancelled) {
+        setReviewEvidenceUrls(
+          Object.fromEntries(entries.filter((entry) => entry !== null)),
+        );
+      }
+    }
+
+    if (reviewCaseItems.length) void loadEvidence();
+
+    return () => {
+      cancelled = true;
+      createdUrls.forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, [reviewCases]);
 
   return (
     <main className="mx-auto w-full max-w-7xl space-y-6 p-4 md:p-6">
@@ -366,19 +480,162 @@ export default function VideoInference() {
               src={videoObjectUrl || undefined}
               controls
               preload="metadata"
+              onError={() => setError('The annotated video could not be decoded. Install the ML dependencies and rerun inference to create a browser-compatible MP4.')}
               className="max-h-[560px] w-full rounded-xl bg-black"
             />
-            <p className="mt-3 text-xs text-gray-500">
-              If playback fails, verify that the job video endpoint is returning
-              the generated annotated video.
-            </p>
+            <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-xs text-gray-500">
+              <span><strong className="text-emerald-700">Green boxes</strong> indicate helmet detections.</span>
+              <span><strong className="text-red-700">Red boxes</strong> indicate review candidates.</span>
+              <span>Each label includes the tracked rider ID and confidence.</span>
+            </div>
           </section>
 
           <section className="rounded-2xl border border-slate-200 bg-white p-5 text-slate-900 shadow-sm">
-            <h2 className="mb-3 font-semibold text-slate-900">Inference result</h2>
-            <pre className="max-h-96 overflow-auto rounded-xl bg-slate-50 p-4 text-xs leading-relaxed text-slate-900">
-              {pretty(job.result)}
-            </pre>
+            <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wider text-cyan-700">
+                  Completed analysis
+                </p>
+                <h2 className="mt-1 text-xl font-bold text-slate-900">Inference result</h2>
+                <p className="mt-1 text-sm text-slate-500">
+                  A quick operational summary of the processed footage.
+                </p>
+              </div>
+              <span className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1.5 text-sm font-semibold text-emerald-700">
+                <ShieldCheck size={16} /> Completed
+              </span>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {[
+                ['Frames processed', resultNumber(result, 'frames_processed'), 'Video coverage'],
+                ['Detections recorded', resultNumber(result, 'detections_recorded'), 'Vehicle events'],
+                ['Helmet checks', resultNumber(result, 'helmet_crops_tested'), 'Rider crops tested'],
+                ['Review candidates', resultNumber(result, 'helmet_review_candidates'), 'Need human review'],
+              ].map(([label, value, caption]) => (
+                <div key={label} className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                  <p className="text-xs font-medium text-slate-500">{label}</p>
+                  <p className="mt-2 text-2xl font-bold tracking-tight text-slate-900">
+                    {Number(value).toLocaleString()}
+                  </p>
+                  <p className="mt-1 text-xs text-slate-500">{caption}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-5 border-t border-slate-200 pt-5">
+              <div className="mb-3 flex flex-wrap items-end justify-between gap-2">
+                <div>
+                  <h3 className="font-semibold text-slate-900">Captured review frames</h3>
+                  <p className="mt-1 text-sm text-slate-500">
+                    Actual frames captured by the model for human verification.
+                  </p>
+                </div>
+                <span className="text-xs font-medium text-slate-500">
+                  {reviewCaseItems.length} candidate{reviewCaseItems.length === 1 ? '' : 's'}
+                </span>
+              </div>
+
+              {reviewCaseItems.length === 0 ? (
+                <p className="rounded-lg bg-slate-50 p-4 text-sm text-slate-500">
+                  No captured review frames were returned for this job.
+                </p>
+              ) : (
+                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                  {reviewCaseItems.map((item) => (
+                    <article key={item.case_id} className="overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
+                      {reviewEvidenceUrls[item.case_id] ? (
+                        <img
+                          src={reviewEvidenceUrls[item.case_id]}
+                          alt={`Captured review frame ${item.frame_index ?? ''}`}
+                          className="aspect-video w-full object-cover"
+                        />
+                      ) : (
+                        <div className="flex aspect-video items-center justify-center bg-slate-200 text-xs text-slate-500">
+                          Evidence frame unavailable
+                        </div>
+                      )}
+                      <div className="space-y-2 p-3 text-xs">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="font-semibold text-red-700">
+                            {item.helmet_status || 'Review candidate'}
+                          </span>
+                          {item.helmet_confidence != null && (
+                            <span className="font-medium text-slate-600">
+                              {(item.helmet_confidence * 100).toFixed(1)}% confidence
+                            </span>
+                          )}
+                        </div>
+                        <div className="flex flex-wrap gap-x-3 gap-y-1 text-slate-500">
+                          <span>Frame {item.frame_index ?? 'N/A'}</span>
+                          <span>{item.timestamp_seconds != null ? `${item.timestamp_seconds.toFixed(2)}s` : 'Time N/A'}</span>
+                          <span>Track ID {item.rider_track_id ?? 'N/A'}</span>
+                        </div>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="mt-5 grid gap-4 lg:grid-cols-2">
+              <div className="rounded-xl border border-slate-200 p-4">
+                <div className="mb-3 flex items-center gap-2">
+                  <ShieldCheck size={18} className="text-cyan-700" />
+                  <h3 className="font-semibold">Pipeline status</h3>
+                </div>
+                <div className="space-y-3 text-sm">
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="text-slate-500">Vehicle and helmet inference</span>
+                    <span className="font-semibold text-emerald-700">Completed</span>
+                  </div>
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="text-slate-500">Helmet detections</span>
+                    <span className="font-semibold text-slate-900">
+                      {resultNumber(result, 'helmet_detections').toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="text-slate-500">Plate recognition</span>
+                    <span className={platePipelineFailed ? 'font-semibold text-amber-700' : 'font-semibold text-emerald-700'}>
+                      {platePipelineFailed ? 'Unavailable' : 'Completed'}
+                    </span>
+                  </div>
+                  {platePipelineFailed && (
+                    <p className="rounded-lg bg-amber-50 p-3 text-xs leading-relaxed text-amber-800">
+                      {String(platePipeline.error || 'Plate recognition could not be completed.')}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              <div className="rounded-xl border border-slate-200 p-4">
+                <div className="mb-3 flex items-center gap-2">
+                  <FileText size={18} className="text-cyan-700" />
+                  <h3 className="font-semibold">Generated outputs</h3>
+                </div>
+                <div className="space-y-3 text-sm">
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="text-slate-500">Annotated video</span>
+                    <span className="max-w-[58%] truncate font-medium text-slate-900">
+                      {artifactName(result?.annotated_video)}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="text-slate-500">Detection log</span>
+                    <span className="max-w-[58%] truncate font-medium text-slate-900">
+                      {artifactName(result?.detection_log)}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="text-slate-500">Review cases</span>
+                    <span className="max-w-[58%] truncate font-medium text-slate-900">
+                      {artifactName(result?.review_cases_json)}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </section>
 
           <section className="rounded-2xl border border-slate-200 bg-white p-5 text-slate-900 shadow-sm">

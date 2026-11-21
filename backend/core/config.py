@@ -10,6 +10,7 @@ class Settings(BaseSettings):
         "runs/detect/runs/production/"
         "idd_speed_benchmark_batch24/weights/best.pt"
     )
+    inference_device: str = "auto"
     evidence_dir: str = "storage/evidence"
 
     qdrant_url: str = "http://localhost:6333"

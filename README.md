@@ -161,3 +161,18 @@ Never use `git add -f` on datasets, credentials, trained weights, or generated e
 ## License
 
 No project license has been specified in this repository yet. Until one is added, do not assume others have permission to reuse or redistribute the code beyond the rights granted by applicable law and GitHub's platform terms.
+
+
+# Activate the Python environment
+.\.venv\Scripts\Activate.ps1
+
+# Install backend dependencies
+python -m pip install -r requirements.txt
+
+# Install frontend dependencies
+Push-Location frontend
+npm ci
+Pop-Location
+
+# Start backend and frontend together
+python app.py

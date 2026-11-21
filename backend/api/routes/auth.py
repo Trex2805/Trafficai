@@ -48,6 +48,7 @@ class RegisterRequest(BaseModel):
     email: str = Field(min_length=5, max_length=254)
     password: str = Field(min_length=12, max_length=128)
     requested_role: Literal["user", "authority", "developer"] = "user"
+    invitation_token: str | None = Field(default=None, min_length=32, max_length=256)
 
 
 class ForgotPasswordRequest(BaseModel):
@@ -299,6 +300,43 @@ def register(request: RegisterRequest):
 
     if len(name) < 2:
         raise HTTPException(status_code=422, detail="Enter your full name.")
+
+    if request.requested_role == "developer":
+        raw_token = (request.invitation_token or "").strip()
+        if not raw_token:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="A valid developer invitation is required.",
+            )
+
+        now = datetime.now(timezone.utc)
+        try:
+            invitation = invitations.find_one_and_update(
+                {
+                    "token_hash": token_digest(raw_token),
+                    "consumed_at": None,
+                    "expires_at": {"$gt": now},
+                },
+                {
+                    "$set": {
+                        "consumed_at": now,
+                        "consumed_by_email": email,
+                    }
+                },
+                return_document=ReturnDocument.AFTER,
+            )
+        except PyMongoError:
+            logger.exception("Developer invitation database operation failed.")
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail="Database connection unavailable. Please try again later.",
+            )
+
+        if not invitation:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="The developer invitation is invalid or expired.",
+            )
 
     # Authority accounts remain pending until an administrator verifies eligibility.
     is_developer = request.requested_role == "developer"

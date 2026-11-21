@@ -2,6 +2,7 @@
 # Install together with requirements.txt when running ML workloads locally.
 ultralytics==8.4.172
 opencv-python>=4.8,<5.0
+imageio-ffmpeg>=0.5
 Pillow>=10.0
 albumentations>=1.4
 numpy>=1.26,<3.0
